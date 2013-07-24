@@ -26,8 +26,31 @@
     <!-- app -->
     <script src="/lilypad-client/lilypad-plea/app.js"></script>
 
+    <!-- services -->
+    <script src="/lilypad-client/lilypad-plea/services/studentService.js"></script>
+    <script src="/lilypad-client/lilypad-plea/services/viewService.js"></script>
+
+    <!-- controllers -->
+    <script src="/lilypad-client/lilypad-plea/controllers.js"></script>
+
 </head>
-<body>
-    Body
+<body ng-controller="BaseController">
+    {{user_fullname}} | {{date}}
+    <hr>
+
+    <div ng-controller="SidebarController">
+        <ul>
+            <li ng-repeat="student in students.models">
+                <a href="#" ng-click="selectStudent(student)">{{student.get('firstName')}}</a>
+            </li>
+        </ul>
+    </div>
+    <hr>
+
+    <div ng-switch="baseViewState.currentView">
+        Current view: 
+        <div ng-switch-when="chartMenu">{{baseViewState.currentStudent.get('firstName')}}'s Charts</div>
+        <div ng-switch-default>None</div>
+    </div>
 </body>
 </html>
