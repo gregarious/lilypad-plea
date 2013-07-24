@@ -1,6 +1,6 @@
 # Lilypad PLEA
 
-A single-page app for Lilypad at Pace.
+A single-page app for Lilypad at PLEA.
 
 ## Installation (for dev machines)
 
