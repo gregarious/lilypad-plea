@@ -74,7 +74,7 @@
                     <a href="" ng-click="showBehaviorChart()">Behavior Scatterplot</a>
                 </li>
                 <li ng-repeat="chart in charts.models">
-                    <a href="" ng-click="showPerformanceChart(chart)">{{chart.get('subtopic').get('name')}}: {{chart.get('inputChannel').get('name')}}/{{chart.get('outputChannel').get('name')}}</a>
+                    <a href="" ng-click="showPerformanceChart(chart)">{{chart.get('subtopic').get('name')}} {{chart.get('inputChannel').get('name')}}/{{chart.get('outputChannel').get('name')}} <i>(last opened {{dateAgoFormat(chart.get('lastOpenedAt'))}})</i></a>
                 </li>
             </ul>
             
@@ -93,8 +93,37 @@
                 </li>
             </ul>
         </div>
-        <div ng-switch-when="performanceChart" class="frame">
-            Chart!
+        <div ng-switch-when="performanceChart" ng-controller="CellerationChartController" class="frame">
+            <h3>{{baseViewState.currentStudent.get('firstName')}}: {{chart.get('subtopic').get('name')}} {{chart.get('inputChannel').get('name')}}/{{chart.get('outputChannel').get('name')}}</h3>
+            <h3>Metrics:</h3>
+            <ul>
+                <li ng-repeat="metric in dayMetrics.models">
+                    {{metric.get('date')}}: {{metric.get('type')}}: {{metric.get('value')}}
+                </li>
+            </ul>
+            <form ng-show="!todayMetricCreated">
+                <fieldset>
+                    <legend>Create Today's Metric:</legend>
+                    Floor: <input type="text" ng-model="formFloor" value="0" size="2"><br/>
+                    Corrects: <input type="text" ng-model="formSuccesses" value="0" size="2"><br/>
+                    Errors: <input type="text" ng-model="formErrors" value="0" size="2"><br/>
+                    Trials: <input type="text" ng-model="formTrials" value="0" size="2"><br/>
+                    <button ng-click="newMetric()">Submit</button>
+                </fieldset>
+            </form>
+            <h3>Phase Lines:</h3>
+            <ul>
+                <li ng-repeat="phaseLine in phaseLines.models">
+                    {{phaseLine.get('date')}}: {{phaseLine.get('title')}}
+                </li>
+            </ul>
+            <form ng-show="!todayPhaseLineCreated">
+                <fieldset>
+                    <legend>Create Phase Line:</legend>
+                    Title: <input type="text" ng-model="formTitle"><br/>
+                    <button ng-click="newPhaseLine()">Submit</button>
+                </fieldset>
+            </form>
         </div>
     </div>
 </body>

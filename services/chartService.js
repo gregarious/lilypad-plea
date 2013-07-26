@@ -18,7 +18,7 @@ angular.module('plea').service('chartService', function(Backbone, studentService
                 student : Student
 
 				dayMetricsUrl: String
-				PhaseLinesUrl: String
+				phaseLinesUrl: String
          */
         urlRoot: '/plea/charts/',
 
@@ -54,11 +54,11 @@ angular.module('plea').service('chartService', function(Backbone, studentService
     // StudentChartCollection store
     studentChartsStore = {};
 
-    this.chartsForStudent = function(student, refresh) {
+    var chartsForStudent = function(student, refresh) {
         refresh = _.isUndefined(refresh) ? true : refresh;
 
         if (!studentChartsStore[student.id]) {
-            coll = studentChartsStore[student.id] = new StudentChartCollection([], {
+            studentChartsStore[student.id] = new StudentChartCollection([], {
                 student: student
             });
             refresh = true;
@@ -70,4 +70,119 @@ angular.module('plea').service('chartService', function(Backbone, studentService
 
         return studentChartsStore[student.id];
     };
+
+    var DayMetric = Backbone.Model.extend({
+        /*
+            Attibutes:
+                id : Integer
+                date : String (ISO formatted)
+                value : Integer
+                type: Integer (0: floor, 1: corrects, 2: errors, 3: trials)
+                chart: Chart
+         */
+        urlRoot: '/plea/daymetrics/',
+
+        parse: function(response, options) {
+            response = Backbone.Model.prototype.parse.apply(this, arguments);
+            response.chart = new Chart(response.chart);
+            return response;
+        }
+    });
+
+    var ChartDayMetricCollection = Backbone.Collection.extend({
+        model: DayMetric,
+        initialize: function(models, options) {
+            this._chart = options.chart;
+        },
+
+        url: function() {
+            return this._chart.get('dayMetricsUrl');
+        },
+
+        createNewDayMetric: function(dateString, typeCode, value, options) {
+            return this.create({
+                chart: this._chart,
+                date: dateString,
+                type: typeCode,
+                value: value
+            }, options);
+        }
+
+    })
+
+    var PhaseLine = Backbone.Model.extend({
+        /*
+            Attibutes:
+                id : Integer
+                date : String (ISO formatted)
+                title : String
+                chart: Chart
+         */
+        urlRoot: '/plea/phaselines/',
+
+        parse: function(response, options) {
+            response = Backbone.Model.prototype.parse.apply(this, arguments);
+            response.chart = new Chart(response.chart);
+            return response;
+        }
+    });
+
+    var ChartPhaseLineCollection = Backbone.Collection.extend({
+        model: PhaseLine,
+        initialize: function(models, options) {
+            this._chart = options.chart;
+        },
+
+        url: function() {
+            return this._chart.get('phaseLinesUrl');
+        },
+
+        createNewPhaseLine: function(dateString, title, options) {
+            return this.create({
+                chart: this._chart,
+                date: dateString,
+                title: title
+            }, options);
+        }
+    });
+
+    chartDayMetricsStore = {};
+    chartPhaseLinesStore = {};
+
+    var dayMetricsForChart = function(chart, refresh) {
+        refresh = _.isUndefined(refresh) ? true : refresh;
+
+        if (!chartDayMetricsStore[chart.id]) {
+            chartDayMetricsStore[chart.id] = new ChartDayMetricCollection([], {
+                chart: chart
+            });
+            refresh = true;
+        }
+        if (refresh) {
+            chartDayMetricsStore[chart.id].fetch();
+        }
+
+        return chartDayMetricsStore[chart.id];
+    };
+
+    var phaseLinesForChart = function(chart, refresh) {
+        refresh = _.isUndefined(refresh) ? true : refresh;
+
+        if (!chartPhaseLinesStore[chart.id]) {
+            chartPhaseLinesStore[chart.id] = new ChartPhaseLineCollection([], {
+                chart: chart
+            });
+            refresh = true;
+        }
+        if (refresh) {
+            chartPhaseLinesStore[chart.id].fetch();
+        }
+
+        return chartPhaseLinesStore[chart.id];
+    };
+
+
+    this.chartsForStudent = chartsForStudent;
+    this.dayMetricsForChart = dayMetricsForChart;
+    this.phaseLinesForChart = phaseLinesForChart;
 });
