@@ -29,6 +29,7 @@
     <!-- services -->
     <script src="/lilypad-client/lilypad-plea/services/studentService.js"></script>
     <script src="/lilypad-client/lilypad-plea/services/behaviorIncidentService.js"></script>
+    <script src="/lilypad-client/lilypad-plea/services/chartService.js"></script>
     <script src="/lilypad-client/lilypad-plea/services/viewService.js"></script>
 
     <!-- controllers -->
@@ -57,7 +58,7 @@
     <hr>
 
     <div ng-controller="SidebarController" class="frame">
-        Students:
+        <h3>Students:</h3>
         <ul>
             <li ng-repeat="student in students.models" ng-class="{selected: baseViewState.currentStudent === student}">
                 <a href="" ng-click="selectStudent(student)">{{student.get('firstName')}}</a>
@@ -66,23 +67,34 @@
     </div>
 
     <div ng-switch="baseViewState.currentView">
-        <div ng-switch-when="chartMenu" class="frame">
+        <div ng-switch-when="chartMenu" class="frame" ng-controller="ChartsMenu">
             <h3>{{baseViewState.currentStudent.get('firstName')}}'s Charts</h3>
-            <a href="" ng-click="showBehaviorChart()">Behavior Scatterplot</a>
+            <ul>
+                <li>
+                    <a href="" ng-click="showBehaviorChart()">Behavior Scatterplot</a>
+                </li>
+                <li ng-repeat="chart in charts.models">
+                    <a href="" ng-click="showPerformanceChart(chart)">{{chart.get('subtopic').get('name')}}: {{chart.get('inputChannel').get('name')}}/{{chart.get('outputChannel').get('name')}}</a>
+                </li>
+            </ul>
+            
         </div>
         <div ng-switch-when="behaviorChart" ng-controller="ScatterplotController" class="frame">
-            Behaviors:
+            <h3>Behaviors:</h3>
             <ul>
                 <li ng-repeat="type in types.models">
                     <button ng-click="createIncident(type)">{{type.get('code')}} | {{type.get('label')}}</button>
                 </li>
             </ul>
-            Scatterplot:
+            <h3>Scatterplot:</h3>
             <ul>
                 <li ng-repeat="incident in incidents.models">
                     {{dateFormat(incident.get('occurredAt'))}}: {{incident.get('type').get('code')}}
                 </li>
             </ul>
+        </div>
+        <div ng-switch-when="performanceChart" class="frame">
+            Chart!
         </div>
     </div>
 </body>

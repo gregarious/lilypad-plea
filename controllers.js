@@ -4,7 +4,11 @@ function BaseController($scope, moment, baseViewState) {
     $scope.baseViewState = baseViewState;
 
     $scope.showBehaviorChart = function() {
-    	baseViewState.currentView = 'behaviorChart';
+        baseViewState.currentView = 'behaviorChart';
+    };
+
+    $scope.showPerformanceChart = function(chart) {
+        baseViewState.currentView = 'performanceChart';
     };
 }
 
@@ -15,6 +19,11 @@ function SidebarController($scope, studentService, baseViewState) {
         baseViewState.currentStudent = student;
         baseViewState.currentView = 'chartMenu';
     };
+}
+
+function ChartsMenu($scope, chartService, baseViewState) {
+    $scope.student = baseViewState.currentStudent;
+    $scope.charts = chartService.chartsForStudent($scope.student, false);
 }
 
 function ScatterplotController($scope, baseViewState, behaviorIncidentService) {

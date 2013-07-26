@@ -75,9 +75,6 @@ angular.module('plea').service('behaviorIncidentService', function(Backbone, mom
         return behaviorTypesStore[student.id];
     };
 
-
-    // THURS: START HERE!
-
     var BehaviorIncident = Backbone.Model.extend({
         /*
             Attributes:
