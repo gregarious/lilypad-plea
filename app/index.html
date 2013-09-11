@@ -9,32 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 
-    <!-- stylesheets -->
-
-    <!-- angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-mobile.js"></script>
-
-    <!-- modules -->
-    <!-- Zepto included for AJAX library, not DOM manipulation. jqLite will still handle that -->
-    <script src="/lilypad-client/lilypad-plea/modules/underscore.js"></script>
-    <script src="/lilypad-client/lilypad-plea/modules/backbone.js"></script>
-    <script src="/lilypad-client/lilypad-plea/modules/backbone-patches.js"></script>
-    <script src="/lilypad-client/lilypad-plea/modules/moment.js"></script>
-    <script src="/lilypad-client/lilypad-plea/modules/modules.js"></script>
-
-    <!-- app -->
-    <script src="/lilypad-client/lilypad-plea/app.js"></script>
-
-    <!-- services -->
-    <script src="/lilypad-client/lilypad-plea/services/studentService.js"></script>
-    <script src="/lilypad-client/lilypad-plea/services/behaviorIncidentService.js"></script>
-    <script src="/lilypad-client/lilypad-plea/services/chartService.js"></script>
-    <script src="/lilypad-client/lilypad-plea/services/viewService.js"></script>
-
-    <!-- controllers -->
-    <script src="/lilypad-client/lilypad-plea/controllers.js"></script>
-
+    <!-- simple skeleton styling -->
     <style type="text/css">
         * {
             box-sizing: border-box;
@@ -52,8 +27,36 @@
             padding: 1em;
         }
     </style>
+
+    <!-- angular -->
+    <script src="/lilypad-client/lilypad-plea/app/lib/angular-1.2.0-rc.2.js"></script>
+
+    <!-- third party modules -->
+    <!-- first import the libraries -->
+    <script src="/lilypad-client/lilypad-plea/app/lib/underscore.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/lib/backbone.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/lib/moment.js"></script>
+    <!-- now declare the modules to wrap them -->
+    <script src="/lilypad-client/lilypad-plea/app/lib/modules.js"></script>
+
+    <!-- core module -->
+    <script src="/lilypad-client/lilypad-plea/app/core/module.js"></script>
+
+    <!-- students module -->
+    <script src="/lilypad-client/lilypad-plea/app/students/module.js"></script>
+
+    <!-- core module -->
+    <script src="/lilypad-client/lilypad-plea/app/behaviors/module.js"></script>
+
+    <!-- core module -->
+    <script src="/lilypad-client/lilypad-plea/app/charts/module.js"></script>
 </head>
-<body ng-controller="BaseController">
+<body ng-controller="BaseCtrl">
+    <p>World: Hello Angular?</p>
+    <p>Angular: {{hello}}</p>
+</body>
+<!--
+    Obsolete. Need to port to use new structure.
     {{user_fullname}} | {{date}}
     <hr>
 
@@ -77,7 +80,7 @@
                     <a href="" ng-click="showPerformanceChart(chart)">{{chart.get('subtopic').get('name')}}: {{chart.get('inputChannel').get('name')}}/{{chart.get('outputChannel').get('name')}}</a>
                 </li>
             </ul>
-            
+
         </div>
         <div ng-switch-when="behaviorChart" ng-controller="ScatterplotController" class="frame">
             <h3>Behaviors:</h3>
@@ -97,5 +100,6 @@
             Chart!
         </div>
     </div>
+-->
 </body>
 </html>

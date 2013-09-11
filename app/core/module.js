@@ -1,3 +1,14 @@
+// declare the core app `plea` module
+angular.module('plea', ['pleaStudents', 'pleaCharts', 'pleaBehaviors']);
+
+// quick sanity check controller
+angular.module('plea').controller('BaseCtrl', function($scope) {
+	$scope.hello = 'Hello World!';
+});
+
+/*
+Holding controller.js code from before reorganization
+
 function BaseController($scope, moment, baseViewState) {
     $scope.user_fullname = "Jack Donaghy";
     $scope.date = moment().format('MMMM Do');
@@ -39,3 +50,4 @@ function ScatterplotController($scope, baseViewState, behaviorIncidentService) {
 		return moment(date).format('MM/DD/YY HH:mm');
 	};
 }
+*/
