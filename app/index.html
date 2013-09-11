@@ -59,6 +59,7 @@
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartCtrl.js"></script>
 </head>
 <body ng-controller="MainCtrl">
+    <!-- "Sidebar" showing a list of students -->
     <div id="sidebar" ng-controller="StudentSelectionCtrl" class="frame">
         <h1>Students (Total: {{studentCount}})</h1>
         <ul>
@@ -67,7 +68,10 @@
             </li>
         </ul>
     </div>
+
+    <!-- Main panel" where either a list of student's charts or a single chart will be displayed -->
     <div id="mainPanel" class="frame">
+        <!-- Chart selection list -->
         <div id="chartSelection"
              ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
              ng-controller="ChartSelectionCtrl">
@@ -76,6 +80,8 @@
                 <a href="" ng-click="selectChart(chart)">{{chart.getLabel()}}</a>
             </li>
         </div>
+
+        <!-- Chart detail (after chart is selected) -->
         <div id="chart"
             ng-if="mainViewState.selectedChart"
             ng-controller="ChartCtrl">

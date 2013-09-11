@@ -1,3 +1,9 @@
+/**
+ * Chart model definition
+ *
+ * To be fleshed out with more DayMetric-related data handling. For now
+ * just handling the label.
+ */
 angular.module('plea').factory('Chart', function(Backbone) {
 	return Backbone.Model.extend({
 		urlRoot: '/plea/charts/',
@@ -9,6 +15,12 @@ angular.module('plea').factory('Chart', function(Backbone) {
 	});
 });
 
+/**
+ * Data store for chart objects.
+ *
+ * Provided accessors:
+ * - getAllForStudent: Returns all charts for a given student
+ */
 angular.module('plea').factory('chartDataStore', function(Chart) {
 	var studentChartCollectionFactory = function(student) {
 		return new (Backbone.Collection.extend({

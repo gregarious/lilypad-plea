@@ -1,3 +1,6 @@
+/**
+ * Controller to display a list of charts for a given student.
+ */
 angular.module('plea').controller('ChartSelectionCtrl', function($scope, chartDataStore, mainViewState) {
     var updateChartList = function() {
         $scope.chartCollection = chartDataStore.getAllForStudent(mainViewState.selectedStudent);
