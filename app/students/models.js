@@ -1,10 +1,10 @@
-angular.module('pleaStudents').factory('Student', function(Backbone) {
+angular.module('plea').factory('Student', function(Backbone) {
 	return Backbone.Model.extend({
 		urlRoot: '/plea/students/'
 	});
 });
 
-angular.module('pleaStudents').factory('studentDataStore', function(Student) {
+angular.module('plea').factory('studentDataStore', function(Student) {
 	var StudentCollection = Backbone.Collection.extend({
 		url: '/plea/students/',
 		model: Student

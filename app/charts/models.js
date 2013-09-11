@@ -1,4 +1,4 @@
-angular.module('pleaCharts').factory('Chart', function(Backbone) {
+angular.module('plea').factory('Chart', function(Backbone) {
 	return Backbone.Model.extend({
 		urlRoot: '/plea/charts/',
 		getLabel: function() {
@@ -9,7 +9,7 @@ angular.module('pleaCharts').factory('Chart', function(Backbone) {
 	});
 });
 
-angular.module('pleaCharts').factory('chartDataStore', function(Chart) {
+angular.module('plea').factory('chartDataStore', function(Chart) {
 	var studentChartCollectionFactory = function(student) {
 		return new (Backbone.Collection.extend({
 			url: student.get('chartsUrl'),

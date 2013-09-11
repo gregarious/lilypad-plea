@@ -11,7 +11,7 @@
  *    sucessful. You need to use this route if you have code that depends on
  *    the collection being populated.
  */
-angular.module('pleaMain').controller('StudentSelectionCtrl', function($scope, studentDataStore, mainViewState) {
+angular.module('plea').controller('StudentSelectionCtrl', function($scope, studentDataStore, mainViewState) {
     $scope.studentCollection = studentDataStore.getAll(function() {
         // set this once the collection is fetched from the server
         $scope.studentCount = $scope.studentCollection.length;

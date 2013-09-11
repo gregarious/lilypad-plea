@@ -1,7 +1,7 @@
 /**
  * Global service to track UI state
  */
-angular.module('pleaMain').factory('mainViewState', function(_, Backbone) {
+angular.module('plea').factory('mainViewState', function(_, Backbone) {
 	var viewState = {
 		selectedStudent: null,
 		setSelectedStudent: function(student) {

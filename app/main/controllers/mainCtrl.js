@@ -1,3 +1,3 @@
-angular.module('pleaMain').controller('MainCtrl', function($scope, mainViewState) {
+angular.module('plea').controller('MainCtrl', function($scope, mainViewState) {
     $scope.mainViewState = mainViewState;
 });

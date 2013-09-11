@@ -1,4 +1,4 @@
-angular.module('pleaMain').controller('ChartSelectionCtrl', function($scope, chartDataStore, mainViewState) {
+angular.module('plea').controller('ChartSelectionCtrl', function($scope, chartDataStore, mainViewState) {
     var updateChartList = function() {
         $scope.chartCollection = chartDataStore.getAllForStudent(mainViewState.selectedStudent);
     };
