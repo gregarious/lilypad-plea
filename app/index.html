@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="plea">
+<html ng-app="pleaMain">
 <head>
     <title>Lilypad - PLEA</title>
 
@@ -39,17 +39,21 @@
     <!-- now declare the modules to wrap them -->
     <script src="/lilypad-client/lilypad-plea/app/lib/modules.js"></script>
 
-    <!-- core module -->
-    <script src="/lilypad-client/lilypad-plea/app/core/module.js"></script>
+    <!-- common module -->
+    <script src="/lilypad-client/lilypad-plea/app/common/module.js"></script>
 
     <!-- students module -->
     <script src="/lilypad-client/lilypad-plea/app/students/module.js"></script>
 
-    <!-- core module -->
+    <!-- behaviors module -->
     <script src="/lilypad-client/lilypad-plea/app/behaviors/module.js"></script>
 
-    <!-- core module -->
+    <!-- charts module -->
     <script src="/lilypad-client/lilypad-plea/app/charts/module.js"></script>
+
+    <!-- main module -->
+    <script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>
+
 </head>
 <body ng-controller="BaseCtrl">
     <p>World: Hello Angular?</p>

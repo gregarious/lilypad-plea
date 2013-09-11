@@ -1,8 +1,8 @@
-// declare the core app `plea` module
-angular.module('plea', ['pleaStudents', 'pleaCharts', 'pleaBehaviors']);
+// declare the core app `pleaMain` module
+angular.module('pleaMain', ['pleaCommon', 'pleaStudents', 'pleaCharts', 'pleaBehaviors']);
 
 // quick sanity check controller
-angular.module('plea').controller('BaseCtrl', function($scope) {
+angular.module('pleaMain').controller('BaseCtrl', function($scope) {
 	$scope.hello = 'Hello World!';
 });
 
