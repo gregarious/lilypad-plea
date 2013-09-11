@@ -1,11 +1,6 @@
 // declare the core app `pleaMain` module
 angular.module('pleaMain', ['pleaCommon', 'pleaStudents', 'pleaCharts', 'pleaBehaviors']);
 
-// quick sanity check controller
-angular.module('pleaMain').controller('BaseCtrl', function($scope) {
-	$scope.hello = 'Hello World!';
-});
-
 /*
 Holding controller.js code from before reorganization
 

@@ -44,6 +44,7 @@
 
     <!-- students module -->
     <script src="/lilypad-client/lilypad-plea/app/students/module.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/students/models.js"></script>
 
     <!-- behaviors module -->
     <script src="/lilypad-client/lilypad-plea/app/behaviors/module.js"></script>
@@ -53,11 +54,16 @@
 
     <!-- main module -->
     <script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers.js"></script>
 
 </head>
-<body ng-controller="BaseCtrl">
-    <p>World: Hello Angular?</p>
-    <p>Angular: {{hello}}</p>
+<body>
+    <div ng-controller="StudentSelectionCtrl">
+        <h1>Students (Total: {{studentCount}})</h1>
+        <ul>
+            <li ng-repeat="student in studentCollection.models">{{student.get('firstName')}}</li>
+        </ul>
+    </div>
 </body>
 <!--
     Obsolete. Need to port to use new structure.
