@@ -51,24 +51,45 @@
 
     <!-- charts module -->
     <script src="/lilypad-client/lilypad-plea/app/charts/module.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/charts/models.js"></script>
 
     <!-- main module -->
     <script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>
-    <script src="/lilypad-client/lilypad-plea/app/main/controllers.js"></script>
-
+    <script src="/lilypad-client/lilypad-plea/app/main/services/mainViewState.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers/mainCtrl.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers/studentSelectionCtrl.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartSelectionCtrl.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartCtrl.js"></script>
 </head>
-<body>
-    <div ng-controller="StudentSelectionCtrl">
+<body ng-controller="MainCtrl">
+    <div id="sidebar" ng-controller="StudentSelectionCtrl" class="frame">
         <h1>Students (Total: {{studentCount}})</h1>
         <ul>
-            <li ng-repeat="student in studentCollection.models">{{student.get('firstName')}}</li>
+            <li ng-repeat="student in studentCollection.models">
+                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}">{{student.get('firstName')}}</a>
+            </li>
         </ul>
     </div>
+    <div id="mainPanel" class="frame">
+        <div id="chartSelection"
+             ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
+             ng-controller="ChartSelectionCtrl">
+            <h2>{{mainViewState.selectedStudent.get('firstName')}}'s Charts</h2>
+            <li ng-repeat="chart in chartCollection.models">
+                <a href="" ng-click="selectChart(chart)">{{chart.getLabel()}}</a>
+            </li>
+        </div>
+        <div id="chart"
+            ng-if="mainViewState.selectedChart"
+            ng-controller="ChartCtrl">
+            <h3>{{chart.getLabel()}}</h3>
+        </div>
+    </div>
 </body>
+
+
 <!--
-    Obsolete. Need to port to use new structure.
-    {{user_fullname}} | {{date}}
-    <hr>
+    Obsolete template fragments: porting them over to skeleton.
 
     <div ng-controller="SidebarController" class="frame">
         <h3>Students:</h3>

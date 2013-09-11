@@ -1,7 +1,3 @@
-(function() {   // closure to keep `pleaMain` local
-
-var pleaMain = angular.module('pleaMain');
-
 /**
  * Controller for student selection sidebar.
  *
@@ -15,7 +11,7 @@ var pleaMain = angular.module('pleaMain');
  *    sucessful. You need to use this route if you have code that depends on
  *    the collection being populated.
  */
-pleaMain.controller('StudentSelectionCtrl', function($scope, studentDataStore) {
+angular.module('pleaMain').controller('StudentSelectionCtrl', function($scope, studentDataStore, mainViewState) {
     $scope.studentCollection = studentDataStore.getAll(function() {
         // set this once the collection is fetched from the server
         $scope.studentCount = $scope.studentCollection.length;
@@ -23,6 +19,12 @@ pleaMain.controller('StudentSelectionCtrl', function($scope, studentDataStore) {
 
     // this alone will fix the scope variable to 0: see the notes above
     $scope.studentCount = $scope.studentCollection.length;
-});
 
-})();
+    $scope.mainViewState = mainViewState;
+
+    $scope.selectStudent = function(student) {
+        mainViewState.setSelectedStudent(student);
+        // also reset the selected chart
+        mainViewState.setSelectedChart(null);
+    };
+});
