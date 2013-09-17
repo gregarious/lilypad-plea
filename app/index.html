@@ -60,6 +60,9 @@
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/studentSelectionCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartSelectionCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartCtrl.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers/behaviorCtrl.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/filters.js"></script>
+
 </head>
 <body ng-controller="MainCtrl">
     <!-- "Sidebar" showing a list of students -->
@@ -79,12 +82,12 @@
              ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
              ng-controller="ChartSelectionCtrl">
             <h2>{{mainViewState.selectedStudent.get('firstName')}}'s Charts</h2>
-            <ul ng-show="chartCollection.models.length">
+            <ul>
+                <li><a href="" ng-click="selectScatterplot()">Behavior Scatterplot</a></li>
                 <li ng-repeat="chart in chartCollection.models">
                     <a href="" ng-click="selectChart(chart)">{{chart.getLabel()}}</a>
                 </li>
             </ul>
-            <div ng-show="!chartCollection.models.length">No charts found.</div>
         </div>
 
         <!-- Chart detail (after chart is selected) -->
@@ -132,6 +135,34 @@
             </table>
             <div ng-show="!phaseLineCollection.models.length">No phase lines found.</div>
         </div>
+
+        <!-- Scatterplot detail (shown when scatterplot is selected) -->
+        <div id="chart"
+            ng-if="mainViewState.isScatterplotSelected"
+            ng-controller="BehaviorCtrl">
+            <h3>Behavior Scatterplot</h3>
+            <h4>Active Types</h4>
+            <ul>
+                <li ng-repeat="type in activeTypes">{{type.get('label')}} ({{type.get('code')}})</li>
+            </ul>
+            <h4>Incidents</h4>
+            <table ng-show="incidentCollection.length">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="incident in incidentCollection.models">
+                        <td>{{incident.get('occurredAt') | formatDatetime}}</td>
+                        <td>{{incident.get('type').get('code')}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-show="!incidentCollection.length">No incidents found.</div>
+        </div>
+
     </div>
 </body>
 </html>

@@ -3,6 +3,10 @@
  * stub for now.
  */
 angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _) {
+    /**
+     * $scope initialization
+     */
+
     $scope.chart = mainViewState.selectedChart;
 
     // upon fetching data, this array will be filled with bare Javascript
@@ -11,7 +15,6 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 
     // Fetch the Collection of DayMetric objects and group values for the same
     // date into objects.
-
     var dayMetricCollection = $scope.chart.getDayMetrics(function() {
         // find the range of dates these metrics span
 		var datesInRange = _.uniq(dayMetricCollection.pluck('date'), true);
@@ -25,6 +28,11 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
     // No need to do any extra processing to the phase lines, just expose
     // the bare collection.
     $scope.phaseLineCollection = $scope.chart.getPhaseLines();
+
+
+    /**
+     * Utility functions
+     */
 
 	/**
 	 * Packages a group of DayMetrics that share a date together, key-indexed

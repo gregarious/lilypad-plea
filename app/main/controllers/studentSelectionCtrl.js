@@ -32,7 +32,8 @@ angular.module('plea').controller('StudentSelectionCtrl', function($scope, stude
 
     $scope.selectStudent = function(student) {
         mainViewState.setSelectedStudent(student);
-        // also reset the selected chart
+        // also reset the selected chart/scatterplot
         mainViewState.setSelectedChart(null);
+        mainViewState.isScatterplotSelected = false;
     };
 });

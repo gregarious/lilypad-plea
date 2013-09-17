@@ -24,7 +24,10 @@ angular.module('plea').factory('mainViewState', function(_, Backbone) {
 		setSelectedChart: function(chart) {
 			this.selectedChart = chart;
 			this.trigger('change:selectedChart', chart);
-		}
+		},
+
+		// no need to allow this to be observable right now
+		isScatterplotSelected: false
 	};
 
 	// add Backbone event-triggering capabilities before returning

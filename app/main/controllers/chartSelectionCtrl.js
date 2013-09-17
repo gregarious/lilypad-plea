@@ -10,5 +10,10 @@ angular.module('plea').controller('ChartSelectionCtrl', function($scope, chartDa
 
     $scope.selectChart = function(chart) {
         mainViewState.setSelectedChart(chart);
+        mainViewState.isScatterplotSelected = false;
     };
+
+    $scope.selectScatterplot = function() {
+    	mainViewState.isScatterplotSelected = true;
+    }
 });
