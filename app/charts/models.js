@@ -56,17 +56,19 @@ angular.module('plea').factory('DayMetric', function(Backbone, _) {
 
     return Backbone.Model.extend({
         urlRoot: '/plea/daymetrics/',
+
+        // map the type code from the server to its label
         parse: function(response) {
             response = Backbone.Model.prototype.parse.apply(this, arguments);
-            // map the type code from the server to its label
+
             response.type = typeCodeToLabelMap[response.type];
             return response;
         },
 
+        // map the type label to it's code on the server
         toJSON: function() {
             // camelize the data keys first
             var data = Backbone.Model.prototype.toJSON.apply(this, arguments);
-            // map the type label to it's code on the server
             data[type] = typeLabelToCodeMap[data[type]];
             return data;
         }
