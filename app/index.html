@@ -82,6 +82,7 @@
              ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
              ng-controller="ChartSelectionCtrl">
             <h2>{{mainViewState.selectedStudent.get('firstName')}}'s Charts</h2>
+            <!-- Always list the scattplot, then cycle through other charts -->
             <ul>
                 <li><a href="" ng-click="selectScatterplot()">Behavior Scatterplot</a></li>
                 <li ng-repeat="chart in chartCollection.models">
@@ -96,6 +97,8 @@
             ng-controller="ChartCtrl">
             <h3>{{chart.getLabel()}}</h3>
             <h4>Day Metrics</h4>
+
+            <!-- If there is Celleration chart data, show a table of it -->
             <table ng-show="dailyRecords.length">
                 <thead>
                     <tr>
@@ -116,8 +119,10 @@
                     </tr>
                 </tbody>
             </table>
+            <!-- If there is no chart data, print this message -->
             <div ng-show="!dailyRecords.length">No metrics found.</div>
 
+            <!-- Show a table of phase line data, or a message if there are no entries -->
             <h4>Phase Lines</h4>
             <table ng-show="phaseLineCollection.models.length">
                 <thead>
@@ -137,14 +142,18 @@
         </div>
 
         <!-- Scatterplot detail (shown when scatterplot is selected) -->
-        <div id="chart"
+        <div id="scatterplot"
             ng-if="mainViewState.isScatterplotSelected"
             ng-controller="BehaviorCtrl">
             <h3>Behavior Scatterplot</h3>
+
+            <!-- First list the active types for the student -->
             <h4>Active Types</h4>
             <ul>
                 <li ng-repeat="type in activeTypes">{{type.get('label')}} ({{type.get('code')}})</li>
             </ul>
+
+            <!-- Show a table of incidents for the selected student, or a message if there are none -->
             <h4>Incidents</h4>
             <table ng-show="incidentCollection.length">
                 <thead>
