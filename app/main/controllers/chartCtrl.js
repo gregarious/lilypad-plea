@@ -2,25 +2,55 @@
  * Controller to handle display of a selected chart. Basically just a skeleton
  * stub for now.
  */
-angular.module('plea').controller('ChartCtrl', function($scope, mainViewState) {
+angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _) {
     $scope.chart = mainViewState.selectedChart;
 
-    $scope.dayMetricCollection = $scope.chart.getDayMetrics();
+    // upon fetching data, this array will be filled with bare Javascript
+    // objects of the form: {date: '2013-09-03', floor: 40, correct: 40, etc.}
+    $scope.dailyRecords = [];
+
+    // Fetch the Collection of DayMetric objects and group values for the same
+    // date into objects.
+
+    var dayMetricCollection = $scope.chart.getDayMetrics(function() {
+        // find the range of dates these metrics span
+		var datesInRange = _.uniq(dayMetricCollection.pluck('date'), true);
+        // package all metric values for each respective date into the same object
+		_.each(datesInRange, function(date) {
+			var pkg = packageMetricValues(dayMetricCollection.where({'date': date}));
+			$scope.dailyRecords.push(pkg);
+		});
+    });
+
+    // No need to do any extra processing to the phase lines, just expose
+    // the bare collection.
     $scope.phaseLineCollection = $scope.chart.getPhaseLines();
 
-	// Note that this controller will be re-invoked every time a chart is
-	// selected because its under an ng-if clause. That's why we can get
-	// away with setting $scope.chart once and not watching for mainViewState
-	// to trigger a 'change:selectedChart' event. This is not true in general
-	// (for example, in `chartSelectionCtrl` we need to explicitly watch for
-	// a change).
-	//
-	// TODO: There's two (more) proper ways to implement this:
-	//
-	// 1. If re-initialization on every chart load is desirable, consider
-	// using a true directive. This is a major refactor that's not necessary
-	// at the moment
-	// 2. More feasibly: Just take the philosophy that all controllers are
-	// initialized on app load with no bound data, and state triggers are
-	// always necessary for setting up the state
+	var typeLabelMap = {0: 'floor', 1: 'corrects', 2: 'errors', 3: 'trials'};
+	/**
+	 * Packages a group of DayMetrics that share a date together, key-indexed
+	 * by their respective metric types.
+	 *
+	 * Note that the function assumes all input metrics have the same date and
+	 * that their `type` attribute is in the range 0-3.
+	 *
+	 * @param  {DayMetric} metrics  Array of DayMetric objects
+	 * @return {Object}             Package of metric values
+	 */
+	function packageMetricValues(metrics) {
+		if (metrics.length < 1) {
+			return [];
+		}
+
+		// assume first metric date is shared by all
+		var pkg = { date: metrics[0].get('date') };
+
+		_.each(metrics, function(dayMetric) {
+			var label = typeLabelMap[dayMetric.get('type')];
+			if (label) {
+				pkg[label] = dayMetric.get('value');
+			}
+		});
+		return pkg;
+	}
 });

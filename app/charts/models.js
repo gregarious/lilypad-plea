@@ -11,7 +11,7 @@ angular.module('plea').factory('Chart', function(Backbone, dayMetricDataStore, p
 		},
 
 		/**
-		 * Add a new daily record (set of metrics) to the chart.
+		 * Add a new DayMetric to the chart.
 		 * @param {DailyRecord} DailyRecord model instance
 		 */
 		addDayMetric: function(dailyRecord) {

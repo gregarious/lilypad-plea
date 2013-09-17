@@ -26,6 +26,9 @@
             margin: 1em 0;
             padding: 1em;
         }
+        td {
+            text-align: right;
+        }
     </style>
 
     <!-- angular -->
@@ -76,9 +79,12 @@
              ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
              ng-controller="ChartSelectionCtrl">
             <h2>{{mainViewState.selectedStudent.get('firstName')}}'s Charts</h2>
-            <li ng-repeat="chart in chartCollection.models">
-                <a href="" ng-click="selectChart(chart)">{{chart.getLabel()}}</a>
-            </li>
+            <ul ng-show="chartCollection.models.length">
+                <li ng-repeat="chart in chartCollection.models">
+                    <a href="" ng-click="selectChart(chart)">{{chart.getLabel()}}</a>
+                </li>
+            </ul>
+            <div ng-show="!chartCollection.models.length">No charts found.</div>
         </div>
 
         <!-- Chart detail (after chart is selected) -->
@@ -87,24 +93,30 @@
             ng-controller="ChartCtrl">
             <h3>{{chart.getLabel()}}</h3>
             <h4>Day Metrics</h4>
-            <table>
+            <table ng-show="dailyRecords.length">
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Type</th>
-                        <th>Value</th>
+                        <th>Floor</th>
+                        <th>Corrects</th>
+                        <th>Errors</th>
+                        <th>Trials</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="metric in dayMetricCollection.models">
-                        <td>{{metric.get('date')}}</td>
-                        <td>{{metric.get('type')}}</td>
-                        <td>{{metric.get('value')}}</td>
+                    <tr ng-repeat="record in dailyRecords">
+                        <td>{{record.date}}</td>
+                        <td>{{record.floor}}</td>
+                        <td>{{record.corrects}}</td>
+                        <td>{{record.errors}}</td>
+                        <td>{{record.trials}}</td>
                     </tr>
                 </tbody>
             </table>
+            <div ng-show="!dailyRecords.length">No metrics found.</div>
+
             <h4>Phase Lines</h4>
-            <table>
+            <table ng-show="phaseLineCollection.models.length">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -118,6 +130,7 @@
                     </tr>
                 </tbody>
             </table>
+            <div ng-show="!phaseLineCollection.models.length">No phase lines found.</div>
         </div>
     </div>
 </body>
