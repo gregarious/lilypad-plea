@@ -111,7 +111,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="record in dailyRecords">
-                        <td>{{record.date}}</td>
+                        <td>{{record.date | formatDate:'l'}} </td>
                         <td>{{record.floor}}</td>
                         <td>{{record.corrects}}</td>
                         <td>{{record.errors}}</td>
@@ -133,7 +133,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="phaseLine in phaseLineCollection.models">
-                        <td>{{phaseLine.get('date')}}</td>
+                        <td>{{phaseLine.get('date') | formatDate:'l' }}</td>
                         <td>{{phaseLine.get('title')}}</td>
                     </tr>
                 </tbody>
@@ -164,7 +164,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="incident in incidentCollection.models">
-                        <td>{{incident.get('occurredAt') | formatDatetime}}</td>
+                        <td>{{incident.get('occurredAt') | formatDate:'lll' }}</td>
                         <td>{{incident.get('type').get('code')}}</td>
                     </tr>
                 </tbody>
