@@ -86,7 +86,38 @@
             ng-if="mainViewState.selectedChart"
             ng-controller="ChartCtrl">
             <h3>{{chart.getLabel()}}</h3>
-            (Skeleton isn't set up to show data yet)
+            <h4>Day Metrics</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="metric in dayMetricCollection.models">
+                        <td>{{metric.get('date')}}</td>
+                        <td>{{metric.get('type')}}</td>
+                        <td>{{metric.get('value')}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>Phase Lines</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="phaseLine in phaseLineCollection.models">
+                        <td>{{phaseLine.get('date')}}</td>
+                        <td>{{phaseLine.get('title')}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
