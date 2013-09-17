@@ -26,13 +26,11 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
     // the bare collection.
     $scope.phaseLineCollection = $scope.chart.getPhaseLines();
 
-	var typeLabelMap = {0: 'floor', 1: 'corrects', 2: 'errors', 3: 'trials'};
 	/**
 	 * Packages a group of DayMetrics that share a date together, key-indexed
 	 * by their respective metric types.
 	 *
-	 * Note that the function assumes all input metrics have the same date and
-	 * that their `type` attribute is in the range 0-3.
+	 * Note that the function assumes all input metrics have the same date.
 	 *
 	 * @param  {DayMetric} metrics  Array of DayMetric objects
 	 * @return {Object}             Package of metric values
@@ -46,7 +44,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		var pkg = { date: metrics[0].get('date') };
 
 		_.each(metrics, function(dayMetric) {
-			var label = typeLabelMap[dayMetric.get('type')];
+			var label = dayMetric.get('type');
 			if (label) {
 				pkg[label] = dayMetric.get('value');
 			}

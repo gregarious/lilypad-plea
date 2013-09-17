@@ -50,9 +50,26 @@ angular.module('plea').factory('Chart', function(Backbone, dayMetricDataStore, p
 /**
  * DayMetric model definition
  */
-angular.module('plea').factory('DayMetric', function(Backbone) {
+angular.module('plea').factory('DayMetric', function(Backbone, _) {
+    var typeCodeToLabelMap = {0: 'floor', 1: 'corrects', 2: 'errors', 3: 'trials'};
+    var typeLabelToCodeMap = _.invert(typeCodeToLabelMap);
+
     return Backbone.Model.extend({
-        urlRoot: '/plea/daymetrics/'
+        urlRoot: '/plea/daymetrics/',
+        parse: function(response) {
+            response = Backbone.Model.prototype.parse.apply(this, arguments);
+            // map the type code from the server to its label
+            response.type = typeCodeToLabelMap[response.type];
+            return response;
+        },
+
+        toJSON: function() {
+            // camelize the data keys first
+            var data = Backbone.Model.prototype.toJSON.apply(this, arguments);
+            // map the type label to it's code on the server
+            data[type] = typeLabelToCodeMap[data[type]];
+            return data;
+        }
     });
 });
 
