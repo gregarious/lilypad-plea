@@ -20,11 +20,11 @@ angular.module('plea').factory('Chart', function(Backbone, dayMetricDataStore, p
 
         /**
          * Returns a Collection of DayMetrics instances sorted by date.
-         * @param {Function} asyncCallback Post-async fetch callback.
+         * @param {Function} syncCallback Post-async fetch callback.
          * @return {Collection}
          */
-        getDayMetrics: function(asyncCallback) {
-            return dayMetricDataStore.getAllForChart(this, asyncCallback);
+        getDayMetrics: function(syncCallback) {
+            return dayMetricDataStore.getAllForChart(this, syncCallback);
         },
 
         /**
@@ -37,11 +37,11 @@ angular.module('plea').factory('Chart', function(Backbone, dayMetricDataStore, p
 
         /**
          * Returns a Collection of PhaseLine instances sorted by date.
-         * @param {Function} asyncCallback  Post-async fetch callback.
+         * @param {Function} syncCallback  Post-async fetch callback.
          * @return {Collection}
          */
-        getPhaseLines: function(asyncCallback) {
-            return phaseLineDataStore.getAllForChart(this, asyncCallback);
+        getPhaseLines: function(syncCallback) {
+            return phaseLineDataStore.getAllForChart(this, syncCallback);
         }
 
     });
