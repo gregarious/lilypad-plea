@@ -39,6 +39,8 @@
     <script src="/lilypad-client/lilypad-plea/app/lib/underscore.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/lib/backbone.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/lib/moment.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/lib/raphael-min.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/lib/hammer.min.js"></script>
     <!-- now declare the modules to wrap them -->
     <script src="/lilypad-client/lilypad-plea/app/lib/modules.js"></script>
 
@@ -59,6 +61,7 @@
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/mainCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/studentSelectionCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartSelectionCtrl.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers/metric.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/behaviorCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/filters.js"></script>
@@ -97,9 +100,10 @@
             ng-controller="ChartCtrl">
             <h3>{{chart.getLabel()}}</h3>
             <h4>Day Metrics</h4>
-
+            <div id="draw" ng-show="dailyRecords.length">
+            </div>
             <!-- If there is Celleration chart data, show a table of it -->
-            <table ng-show="dailyRecords.length">
+            <!--<table ng-show="dailyRecords.length">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -118,7 +122,7 @@
                         <td>{{record.trials}}</td>
                     </tr>
                 </tbody>
-            </table>
+            </table>-->
             <!-- If there is no chart data, print this message -->
             <div ng-show="!dailyRecords.length">No metrics found.</div>
 
@@ -171,7 +175,8 @@
             </table>
             <div ng-show="!incidentCollection.length">No incidents found.</div>
         </div>
-
     </div>
+
+    <script type=""
 </body>
 </html>
