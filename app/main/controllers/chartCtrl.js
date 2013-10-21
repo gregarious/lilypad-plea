@@ -81,7 +81,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		this.createPaperDrawingArea();
 		this.setObjects();
 		this.setStyles();
-		this.drawHistoricalData(a.dailyRecords);
+		this.drawHistoricalData($scope.dailyRecords);
 		this.drawXAxis();
 		this.drawYAxis();
 		this.createChartTouchEvents();
@@ -535,6 +535,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		}
 		// create a new instance of Metric for this metric
 		chart.metric[metricName]['metric'] = new Metric(chart, metricName , chart.activeDay, yValue);
+		$scope.chart.addDayMetric(new Date, metricName, chart.metric[metricName]['metric'].getValue());
 		// update the marker on the chart
         // find it and set it to the new value
         var htmlMetricIDTag = document.getElementById(metricName);
