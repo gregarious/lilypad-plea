@@ -7,7 +7,6 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
      * $scope initialization
      */
     $scope.chart = mainViewState.selectedChart;
-    var a = $scope;
     // upon fetching data, this array will be filled with bare Javascript
     // objects of the form: {date: '2013-09-03', floor: 40, correct: 40, etc.}
     $scope.dailyRecords = [];
@@ -156,11 +155,11 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 							   		'stroke': 0,
 							   		'opacity': .9
 							   	},
-			'line' : 			{ 
+			'line' : 			{
 									'stroke-width': '1',
 						 			'stroke': '#000'
 						 		},
-			'cross' : 			{ 
+			'cross' : 			{
 									'stroke-width': '1',
 					    			'stroke': "#F62817",
 					    			'opacity': .9
@@ -265,7 +264,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 				var topDecadeValue = Math.pow(10, this.minExponent + i + 1);
 				this.drawHorizontalLine(lineStartX - this.baseTickLength, lineEndX + this.baseTickLength, topDecadePosition, this.chartStyles['decadebaseline']);
 				this.drawLabel(lineStartX - this.labelPadding, topDecadePosition, topDecadeValue, this.chartStyles['decadebaselabel']);
-			} 
+			}
 
 			//draw all lines in between baselines
 			this.drawIntermediateLines(decadeNumber, decadeBaseValue, decadeBasePosition, lineStartX, lineEndX);
@@ -396,7 +395,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		return y;
 	}
 
-	// converts a day (in int form, between 0 and 140 and 
+	// converts a day (in int form, between 0 and 140 and
 	// returns the x coordinate of that day line on the chart)
 	Chart.prototype.dayToXPosition = function(day) {
 		if ((day < 0) || (day > this.numberOfDays)) {

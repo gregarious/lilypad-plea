@@ -14,8 +14,8 @@ angular.module('plea').factory('Chart', function(Backbone, dayMetricDataStore, p
          * Add a new DayMetric to the chart.
          * @param {DailyRecord} DailyRecord model instance
          */
-        addDayMetric: function(dailyRecord) {
-            console.warn('addDayMetric stub called');
+        addDayMetric: function(date, type, value) {
+            console.warn('addDayMetric stub called: %s, %s, %d', date, type, value);
         },
 
         /**
