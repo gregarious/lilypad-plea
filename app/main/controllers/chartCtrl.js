@@ -523,9 +523,6 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 			event.preventDefault();
 			var chartBottomY = chart.chartHeight + chart.topMargin;
 			var y = chartBottomY - (event.gesture.touches[0].pageY-event.target.offsetTop);
-			console.log(event.gesture.touches[0].pageY);
-			console.log(y);
-			_help = event;
 
 			chart.saveMetric(chart.activeMetric, y);
 		});
@@ -634,26 +631,5 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 				}
 			})
 		}
-/*
-		$('.subtract').on('touchstart click', function(e){
-			e.preventDefault();
-			var label = $(this).attr('id');
-
-			if (label === "sub-correct") {
-				chart.metric['corrects']['metric'].changeValueAndMarker(-1);
-			}
-
-			if (label === "sub-floor") {
-				chart.metric['floor']['metric'].changeValueAndMarker(-1);
-			}
-
-			if (label === "sub-error") {
-				chart.metric['errors']['metric'].changeValueAndMarker(-1);
-			}
-
-			if (label === "sub-trial") {
-				chart.metric['trials']['metric'].changeValueAndMarker(-1);
-			}
-		});*/
 	}
 });
