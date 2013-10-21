@@ -86,6 +86,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		this.drawXAxis();
 		this.drawYAxis();
 		this.createChartTouchEvents();
+		this.createAdjustmentsTouchEvents();
 	}
 
 	Chart.prototype.setDimensions = function() {
@@ -122,7 +123,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 	}
 
 	Chart.prototype.setObjects = function() {
-		this.metricsOrder = ['floor', 'corrects', 'trials', 'errors'];
+		this.metricsOrder = ['floor', 'corrects', 'errors', 'trials'];
 		this.metric = {
 			'corrects' : {
 							'marker' : 'filled-circle',
@@ -521,9 +522,10 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		chart.hammertime.on("tap", function(event){
 			event.preventDefault();
 			var chartBottomY = chart.chartHeight + chart.topMargin;
-			var y = chartBottomY - event.gesture.touches[0].pageY;
+			var y = chartBottomY - (event.gesture.touches[0].pageY-event.target.offsetTop);
 			console.log(event.gesture.touches[0].pageY);
 			console.log(y);
+			_help = event;
 
 			chart.saveMetric(chart.activeMetric, y);
 		});
@@ -551,7 +553,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 
         var nextMetric = chart.getNextMetric(metricName);
         // if the next metric to be entered hasn't been set yet,
-        if (chart.metric[nextMetric]['metric'] === null) {
+        if (chart.metric[nextMetric] !== undefined && chart.metric[nextMetric]['metric'] === null) {
             // set it as the active metric 
             chart.activeMetric = nextMetric;
 
@@ -582,5 +584,76 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
         }
         // otherwise return the default value of 'none'
         return nextMetric;
-}
+	}
+
+	Chart.prototype.createAdjustmentsTouchEvents = function() {
+		var chart = this;
+		var addNodes = document.getElementsByClassName("add");
+		for (var i = 0; i < addNodes.length; i++) {
+			addNodes[i].addEventListener("click", function(e){
+				e.preventDefault();
+				var label = this.getAttribute('id'); // get the id of the div that was clicked
+
+				if (label === "add-correct") {
+					chart.metric['corrects']['metric'].changeValueAndMarker(1);
+				}
+
+				if (label === "add-floor") {
+					chart.metric['floor']['metric'].changeValueAndMarker(1);
+				}
+
+				if (label === "add-error") {
+					chart.metric['errors']['metric'].changeValueAndMarker(1);
+				}
+
+				if (label === "add-trial") {
+					chart.metric['trials']['metric'].changeValueAndMarker(1);
+				}
+			})
+		}
+		var subtractNodes = document.getElementsByClassName("subtract");
+		for (var i = 0; i < addNodes.length; i++) {
+			subtractNodes[i].addEventListener("click", function(e){
+				e.preventDefault();
+				var label = this.getAttribute('id'); // get the id of the div that was clicked
+
+				if (label === "sub-correct") {
+					chart.metric['corrects']['metric'].changeValueAndMarker(-1);
+				}
+
+				if (label === "sub-floor") {
+					chart.metric['floor']['metric'].changeValueAndMarker(-1);
+				}
+
+				if (label === "sub-error") {
+					chart.metric['errors']['metric'].changeValueAndMarker(-1);
+				}
+
+				if (label === "sub-trial") {
+					chart.metric['trials']['metric'].changeValueAndMarker(-1);
+				}
+			})
+		}
+/*
+		$('.subtract').on('touchstart click', function(e){
+			e.preventDefault();
+			var label = $(this).attr('id');
+
+			if (label === "sub-correct") {
+				chart.metric['corrects']['metric'].changeValueAndMarker(-1);
+			}
+
+			if (label === "sub-floor") {
+				chart.metric['floor']['metric'].changeValueAndMarker(-1);
+			}
+
+			if (label === "sub-error") {
+				chart.metric['errors']['metric'].changeValueAndMarker(-1);
+			}
+
+			if (label === "sub-trial") {
+				chart.metric['trials']['metric'].changeValueAndMarker(-1);
+			}
+		});*/
+	}
 });
