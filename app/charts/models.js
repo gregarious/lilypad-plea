@@ -93,7 +93,7 @@ angular.module('plea').factory('PhaseLine', function(Backbone) {
 angular.module('plea').factory('chartDataStore', function(Chart) {
     var studentChartCollectionFactory = function(student) {
         return new (Backbone.Collection.extend({
-            url: student.get('chartsUrl'),
+            url: '/plea/students/' + student.id + '/charts/',
             model: Chart
         }))();
     };
@@ -136,7 +136,7 @@ angular.module('plea').factory('chartDataStore', function(Chart) {
 angular.module('plea').factory('dayMetricDataStore', function(DayMetric) {
     var chartDayMetricCollectionFactory = function(chart) {
         return new (Backbone.Collection.extend({
-            url: chart.get('dayMetricsUrl'),
+            url: '/plea/charts/' + chart.id + '/daymetrics/',
             model: DayMetric
         }))();
     };
@@ -179,7 +179,7 @@ angular.module('plea').factory('dayMetricDataStore', function(DayMetric) {
 angular.module('plea').factory('phaseLineDataStore', function(PhaseLine) {
     var chartPhaseLineCollectionFactory = function(chart) {
         return new (Backbone.Collection.extend({
-            url: chart.get('phaseLinesUrl'),
+            url: '/plea/charts/' + chart.id + '/phaselines/',
             model: PhaseLine
         }))();
     };
