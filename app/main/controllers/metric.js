@@ -205,10 +205,10 @@ Metric.prototype.changeValueAndMarker = function(delta) {
 	if (this !== null) {
 		this.changeMarkerValue(delta);
 		if (this.type === 'floor') {
-			$('#'+this.type).val(this.value+'"');
+			document.getElementById(this.type).value = this.value+'"';
 		}
 		else {
-			$('#'+this.type).val(this.value);
+			document.getElementById(this.type).value = this.value;
 		}
 		this.changeMarkerPosition();
 	}

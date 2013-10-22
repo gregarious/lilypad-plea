@@ -7,7 +7,6 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
      * $scope initialization
      */
     $scope.chart = mainViewState.selectedChart;
-    
     // upon fetching data, this array will be filled with bare Javascript
     // objects of the form: {date: '2013-09-03', floor: 40, correct: 40, etc.}
     $scope.dailyRecords = [];
@@ -82,9 +81,11 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		this.createPaperDrawingArea();
 		this.setObjects();
 		this.setStyles();
-		this.drawHistoricalData(a.dailyRecords);
+		this.drawHistoricalData($scope.dailyRecords);
 		this.drawXAxis();
 		this.drawYAxis();
+		this.createChartTouchEvents();
+		this.createAdjustmentsTouchEvents();
 	}
 
 	Chart.prototype.setDimensions = function() {
@@ -121,6 +122,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 	}
 
 	Chart.prototype.setObjects = function() {
+		this.metricsOrder = ['floor', 'corrects', 'errors', 'trials'];
 		this.metric = {
 			'corrects' : {
 							'marker' : 'filled-circle',
@@ -442,7 +444,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 
 	Chart.prototype.drawHistoricalCorrects = function(day, value) {
 		var cx = day;
-		var decadeNumber = 3; //default base decade for corrects
+		var decadeNumber = 3; // default base decade for corrects
 		var decadeBaseValue = this.getDecadeBaseValue(decadeNumber);
 		var decadeBasePosition = this.getDecadeBasePosition(decadeNumber);
 		var cy = this.valueToYPosition(decadeBasePosition, value * decadeBaseValue, decadeBaseValue);
@@ -473,7 +475,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 
 	Chart.prototype.drawHistoricalTrials = function(day, value) {
 		var cx = day;
-		var decadeNumber = 0; //default base decade for trials
+		var decadeNumber = 0; // default base decade for trials
 		var decadeBaseValue = this.getDecadeBaseValue(decadeNumber);
 		var decadeBasePosition = this.getDecadeBasePosition(decadeNumber);
 		var cy = this.valueToYPosition(decadeBasePosition, value * decadeBaseValue, decadeBaseValue);
@@ -484,16 +486,13 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 
 	Chart.prototype.drawHistoricalFloors = function(day, value) {
 		var cx = day;
-		console.log(value);
 		var logValue = this.floorToLog(value);
-		console.log(logValue);
 		var decadeNumber = 3; //default base decade for floors
 		var decadeBaseValue = this.getDecadeBaseValue(decadeNumber);
 		var decadeBasePosition = this.getDecadeBasePosition(decadeNumber);
 		var cy = this.valueToYPosition(decadeBasePosition, logValue * decadeBaseValue, decadeBaseValue);
 		var radius = 3;
 
-		console.log(cy);
 		var linePath = 'M '+(cx-radius)+' '+cy+' L '+(cx+radius)+' '+cy;
 		var newLine = this.paper.path(linePath);
 		// set floor attributes onto line
@@ -504,12 +503,133 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 	}
 
 	Chart.prototype.floorToLog = function(floorValue) {
-		//in seconds
+		// in seconds
 		return 1/(floorValue/60);
 	}
 
-	//helper to do log10 of numbers
+	// helper to do log10 of numbers
 	function log10(value) {
 		return Math.log(value) / Math.LN10;
+	}
+
+	Chart.prototype.createChartTouchEvents = function() {
+		var chart = this;
+		this.activeMetric = 'floor';
+		chart.hammertime = Hammer(document.getElementById("draw"));
+
+		// draw point on active day line
+		chart.hammertime.on("tap", function(event){
+			event.preventDefault();
+			var chartBottomY = chart.chartHeight + chart.topMargin;
+			var y = chartBottomY - (event.gesture.touches[0].pageY-event.target.offsetTop);
+
+			chart.saveMetric(chart.activeMetric, y);
+		});
+	}
+
+	Chart.prototype.saveMetric = function(metricName, yValue) {
+		var chart = this;
+		// if the metric is already on the chart, remove it
+		if (chart.metric[metricName]['metric'] !== null) {
+			chart.metric[metricName]['metric'].paperObject.remove();
+		}
+		// create a new instance of Metric for this metric
+		chart.metric[metricName]['metric'] = new Metric(chart, metricName , chart.activeDay, yValue);
+		$scope.chart.addDayMetric(new Date, metricName, chart.metric[metricName]['metric'].getValue());
+		// update the marker on the chart
+        // find it and set it to the new value
+        var htmlMetricIDTag = document.getElementById(metricName);
+        htmlMetricIDTag.value=chart.metric[metricName]['metric'].value;
+        //$(htmlMetricID).val(chart.metric[metricName]['metric'].value);
+
+        // highlight the corresponding setion for this metric in the adjustments panel
+        var htmlAdjustmentSectionID = "#"+metricName+"-section";
+        //$("htmlAdjustmentSectionID").css('background','rgba(242,242,242,.8)');
+        // TODO: this should really be adding a class rather than modifying the css
+        // and probably in its own "highlightMetricAdjustment" function
+
+        var nextMetric = chart.getNextMetric(metricName);
+        // if the next metric to be entered hasn't been set yet,
+        if (chart.metric[nextMetric] !== undefined && chart.metric[nextMetric]['metric'] === null) {
+            // set it as the active metric 
+            chart.activeMetric = nextMetric;
+
+            // and highlight that section in the adjustments panel
+            //$('#adjustments').css("display", "block");
+            htmlAdjustmentSectionID = "#"+metricName+"-section";
+            //$(htmlAdjustmentSectionID).css('background','rgba(200,200,200,.8)');
+        }
+        // otherwise set the activeMetric to none
+        else {
+            chart.activeMetric = ' ';
+        }
+	}
+
+	Chart.prototype.getMarkerForMetric = function(type) {
+		return this.metric[type]['marker'];
+	}
+
+	Chart.prototype.getNextMetric = function(metricName) {
+        var chart = this;
+        // find this one in the list metrics in order
+        var thisIndex = chart.metricsOrder.indexOf(metricName);
+        var nextMetric = 'none';
+
+        // if the next metric is within array bounds, return it
+        if (thisIndex + 1 < chart.metricsOrder.length) {
+            nextMetric = chart.metricsOrder[thisIndex+1];
+        }
+        // otherwise return the default value of 'none'
+        return nextMetric;
+	}
+
+	Chart.prototype.createAdjustmentsTouchEvents = function() {
+		var chart = this;
+		var addNodes = document.getElementsByClassName("add");
+		for (var i = 0; i < addNodes.length; i++) {
+			addNodes[i].addEventListener("click", function(e){
+				e.preventDefault();
+				var label = this.getAttribute('id'); // get the id of the div that was clicked
+
+				if (label === "add-correct") {
+					chart.metric['corrects']['metric'].changeValueAndMarker(1);
+				}
+
+				if (label === "add-floor") {
+					chart.metric['floor']['metric'].changeValueAndMarker(1);
+				}
+
+				if (label === "add-error") {
+					chart.metric['errors']['metric'].changeValueAndMarker(1);
+				}
+
+				if (label === "add-trial") {
+					chart.metric['trials']['metric'].changeValueAndMarker(1);
+				}
+			})
+		}
+		var subtractNodes = document.getElementsByClassName("subtract");
+		for (var i = 0; i < addNodes.length; i++) {
+			subtractNodes[i].addEventListener("click", function(e){
+				e.preventDefault();
+				var label = this.getAttribute('id'); // get the id of the div that was clicked
+
+				if (label === "sub-correct") {
+					chart.metric['corrects']['metric'].changeValueAndMarker(-1);
+				}
+
+				if (label === "sub-floor") {
+					chart.metric['floor']['metric'].changeValueAndMarker(-1);
+				}
+
+				if (label === "sub-error") {
+					chart.metric['errors']['metric'].changeValueAndMarker(-1);
+				}
+
+				if (label === "sub-trial") {
+					chart.metric['trials']['metric'].changeValueAndMarker(-1);
+				}
+			})
+		}
 	}
 });

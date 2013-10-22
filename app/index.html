@@ -109,6 +109,74 @@
             <h4>Day Metrics</h4>
             <div id="draw" ng-show="dailyRecords.length">
             </div>
+            <div id="adjustments">
+                <div class="adjustment-section">
+                        <h4>John Smith</h4>
+                </div>
+                <!--<div class="seesay">see/say</div>
+                <div class="colors">colors</div>-->
+                <div class="adjustment-section" id="floor-section">
+                    <label id="floor-label" class="label" for="floor-input">
+                            Floor
+                    </label>
+                    <button id="sub-floor" class="btn subtract">&#8722;</button>
+                    <input type="text" name="floor-input" id="floor" class="input"></input>
+                    <button id="add-floor" class="btn add">+</button>
+                </div>
+                <div class="adjustment-section" id="corrects-section">
+                    <label id="correct-label" class="label" for="correct-input">
+                            Corrects
+                    </label>
+                    <button id="sub-correct" class="btn subtract">&#8722;</button>
+                    <input type="text" name="correct-input" id="corrects" class="input"></input>
+                    <button id="add-correct" class="btn add">+</button>
+                </div>
+                <div class="adjustment-section" id="errors-section">
+                    <label id="error-label" class="label" for="error-input">
+                            Errors
+                    </label>
+                    <button id="sub-error" class="btn subtract">&#8722;</button>
+                    <input type="text" name="error-input" id="errors" class="input"></input>
+                    <button id="add-error" class="btn add">+</button>
+                </div>
+                <div class="adjustment-section" id="trials-section">
+                    <label id="trial-label" class="label" for="trial-input">
+                            Trials
+                    </label>
+                    <button id="sub-trial" class="btn subtract">&#8722;</button>
+                    <input type="text" name="trial-input" id="trials" class="input"></input>
+                    <button id="add-trial" class="btn add">+</button>
+                </div>
+
+                <div class="adjustment-section">
+                    <label id="phaseline-label" class="label">Phase Line</label>
+                    <button id="phaseline" class="btn">Add Phase Line</button>
+                    <button id="remove-phaseline" class="btn">Remove Phase Line</button>
+                </div>
+            </div>
+
+            <div class="modal hide fade" id="addPhaseline" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Phaseline</h3>
+                </div>
+                <div class="modal-body">
+                    <label class="label">Phaseline Floor Value:</label><br />
+                    <input id="phaseline-floor"/><br /><br />
+                    <label class="label">Type of Phaseline</label><br />
+                    <input type="checkbox" name="phaseline-type" value="BOC">&nbsp BOC<br/>
+                        <input type="checkbox" name="phaseline-type" value="Error">&nbsp Error<br/>
+                        <input type="checkbox" name="phaseline-type" value="Holiday">&nbsp Holiday<br/>
+                        <input type="checkbox" name="phaseline-type" value="Med">&nbsp Med<br/>
+                        <input type="checkbox" name="phaseline-type" value="Slice">&nbsp Slice<br/><br />
+                        <label class="label">Additional Notes:</label><br />
+                    <input id="phaseline-note"/>
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <button id="add-phaseline" class="btn">Add Phaseline</button>
+                </div>
+            </div>
             <!-- If there is Celleration chart data, show a table of it -->
             <!--<table ng-show="dailyRecords.length">
                 <thead>
