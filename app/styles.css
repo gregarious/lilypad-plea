@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  padding: 60px 0 0 210px;
+}
+#titlebar {
+  height: 50px;
+  width: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#titlebar h1 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: normal;
+  font-family: Arial, sans-serif;
+  line-height: 2.2;
+}
+#sidebar {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background: #ff0000;
+}
+@media screen {
+  body>div#titlebar {
+    position: fixed;
+  }
+  body>div#sidebar {
+    position: fixed;
+  }
+}
+* html body {
+  overflow:hidden;
+}
+*html div#mainPanel {
+  height: 100%;
+  overflow: auto;
+}
