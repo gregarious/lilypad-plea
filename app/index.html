@@ -57,7 +57,7 @@
 	</div>
     <!-- "Sidebar" showing a list of students -->
     <div id="sidebar" ng-controller="StudentSelectionCtrl" class="frame">
-        <h1>Students (Total: {{studentCount}})</h1>
+        <!--<h1>Students (Total: {{studentCount}})</h1>-->
         <ul>
             <li ng-repeat="student in studentCollection.models">
                 <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}">{{student.get('firstName')}}</a>
