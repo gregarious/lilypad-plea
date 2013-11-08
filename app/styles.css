@@ -1,67 +1,111 @@
 body {
   margin: 0;
-  padding: 0;
-  padding: 60px 0 0 210px;
-  font-family: Arial, sans-serif;
+  /*padding: 60px 0 0 210px;*/
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 12pt;
 }
+
+a {
+  text-decoration: none;
+}
+
 /****** TITLEBAR ******/
 #titlebar {
-  height: 50px;
+  display: inline-block;
+  height: 44px;
   width: 100%;
-  background-color: #58595b;
+  background-color: #31353d;
   color: #ffffff;
   text-align: center;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 #titlebar h1 {
-  margin: 0;
-  font-size: 21px;
+  margin: 10px;
+  font-size: 1em;
   font-weight: normal;
-  font-family: Arial, sans-serif;
-  line-height: 2.2;
+  font-family: "Open Sans", Arial, sans-serif;
 }
 
 /****** SIDEBAR ******/
 #sidebar {
-  position: absolute;
-  top: 50px;
-  left: 0;
   width: 200px;
   height: 100%;
-  background: #404041;
+  background: #dadee4;
 }
 #sidebar ul {
   margin: 0;
   padding: 0;
 }
 #sidebar li {
-  list-style-type: none;
-  padding: 20px 0px 20px 20px;
+  width: 100%;
+  background: #445878;
 }
 #sidebar li a {
+  display: block;
   color: #ffffff;
-  text-decoration: none;
+  padding: 15px 0px 15px 20px;
 } 
 #sidebar li:hover {
+  background: #697993;
+}
+
+#sidebar li > .selected {
   background: #ffffff;
+  color: #000000;
 }
-#sidebar li:hover a {
-  color: #404041;
+
+#mainPanel {
+  margin: 44px 0 0 200px;
+  padding-left: 30px;
 }
+
+#mainPanel h2 {
+  font-size: 1.5em;
+  margin: 0 0 24px 0;
+}
+
+#mainPanel ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 10px 0;
+}
+
+#chartSelection {
+  padding: 10px 0 0 0;
+}
+
+#chartSelection ul {
+  margin: 0;
+}
+
+#chartSelection ul li {
+  margin-bottom: 30px;
+}
+
+#chartSelection ul li a {
+  color: #445878;
+}
+
+#chartSelection ul li a:hover {
+  color: #7deadd;
+}
+
 @media screen {
   body>div#titlebar {
     position: fixed;
+    top:0;
+    left:0;
   }
   body>div#sidebar {
     position: fixed;
+    top: 44px;
+    left: 0;
   }
 }
-* html body {
+
+/**html body {
   overflow:hidden;
 }
 *html div#mainPanel {
   height: 100%;
   overflow: auto;
-}
+}*/

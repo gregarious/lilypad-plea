@@ -2,6 +2,7 @@
 <html ng-app="plea">
 <head>
     <title>Lilypad - PLEA</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
     <!-- For that native webapp experience -->
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
@@ -71,7 +72,7 @@
         <div id="chartSelection"
              ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
              ng-controller="ChartSelectionCtrl">
-            <h2>{{mainViewState.selectedStudent.get('firstName')}}'s Charts</h2>
+            <!--<h2>{{mainViewState.selectedStudent.get('firstName')}}'s--> <h2>Charts</h2>
             <!-- Always list the scattplot, then cycle through other charts -->
             <ul>
                 <li><a href="" ng-click="selectScatterplot()">Behavior Scatterplot</a></li>
