@@ -13,7 +13,10 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
     // objects of the form: {date: '2013-09-03', floor: 40, correct: 40, etc.}
     $scope.dailyRecords = [];
 
- 
+    $scope.goBack = function() {
+    	mainViewState.selectedChart = null;
+    	$scope.chart = null;
+    }
 
     // Fetch the Collection of DayMetric objects and group values for the same
     // date into objects.

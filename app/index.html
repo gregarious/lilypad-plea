@@ -84,7 +84,7 @@
         <div id="chart"
             ng-if="mainViewState.selectedChart"
             ng-controller="ChartCtrl">
-            <div id="goBack" ng-click="goBack">Back</div>
+            <div id="goBack" ng-click="goBack()">Back</div>
             <h3>{{chart.getLabel()}}</h3>
             <h4>Day Metrics</h4>
             <div id="draw" ng-show="dailyRecords.length">
