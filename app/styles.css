@@ -70,7 +70,7 @@ a {
 }
 
 #chartSelection {
-  padding: 10px 0 0 0;
+  padding-top: 10px;
 }
 
 #chartSelection ul {
@@ -87,6 +87,65 @@ a {
 
 #chartSelection ul li a:hover {
   color: #7deadd;
+}
+
+#chart {
+  padding-top: 10px;
+}
+
+#adjustments h4 {
+  margin: 0;
+}
+
+.adjustment-section {
+  margin-bottom: 15px;
+}
+
+.adjustment-section .label {
+  margin-right: 10px;
+}
+
+.btn.subtract {
+  margin-right: 2px;
+}
+
+.btn.add {
+  margin-left: 2px;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"], input[type="file"]::-webkit-file-upload-button, button {
+  -webkit-appearance: none;
+  padding: 3px 5px;
+  color: #000000;
+  background-color: #dadee4;
+  /*border: #ff9800 solid 1px;*/
+  border: none;
+  border-image: none;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+  cursor: auto;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  margin: 0;
+}
+
+input, input[type="password"], input[type="search"], isindex {
+  -webkit-appearance: none;
+  padding: 2px;
+  background-color: white;
+  border: #000000 solid 1px;
+  border-image: none;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+  cursor: auto;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin: 0;}
+
+input[type="checkbox"] {
+  padding: 5px;
 }
 
 @media screen {
