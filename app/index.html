@@ -43,6 +43,7 @@
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/studentSelectionCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartSelectionCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/metric.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers/phaseline.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/behaviorCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/filters.js"></script>
@@ -83,6 +84,7 @@
         <div id="chart"
             ng-if="mainViewState.selectedChart"
             ng-controller="ChartCtrl">
+            <div id="goBack" ng-click="goBack">Back</div>
             <h3>{{chart.getLabel()}}</h3>
             <h4>Day Metrics</h4>
             <div id="draw" ng-show="dailyRecords.length">
@@ -130,9 +132,37 @@
                     <div id="add-phaseline">
                         Add Phaseline
                     </div>
+                    <div id="remove-phaseline">
+                        Remove Phaseline
+                    </div>
                 </div>
             </div>
 
+            <div id="modal">   
+                <div id="phaseline-form">
+                    <div id="phaseline-header">
+                        New Phaseline
+                    </div>
+                    <div id="phaseline-body">
+                        <div class="row">
+                            <label class="label">Phaseline Floor Value:</label>
+                            <input id="phaseline-floor" type="text" />
+                        </div>
+                        <div class="row">
+                            <label class="label">Description: </label>
+                            <input id="phaseline-type" type="text">
+                        </div>
+                        <div class="row">
+                            <label class="label">Additional Notes: </label>
+                            <input id="phaseline-note" type="text">
+                        </div>
+                        <div class="row">
+                            <div id="phaseline-cancel">Cancel</div>
+                            <div id="phaseline-submit">Save</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
            <!-- <div class="modal hide fade" id="addPhaseline" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

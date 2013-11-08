@@ -13,6 +13,8 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
     // objects of the form: {date: '2013-09-03', floor: 40, correct: 40, etc.}
     $scope.dailyRecords = [];
 
+ 
+
     // Fetch the Collection of DayMetric objects and group values for the same
     // date into objects.
     var dayMetricCollection = $scope.chart.getDayMetrics(function() {
@@ -87,6 +89,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		this.drawYAxis();
 		this.drawHistoricalData($scope.dailyRecords);
 		this.createChartTouchEvents();
+		this.createPhaselineTouchEvents();
 		this.createAdjustmentsTouchEvents();
 	}
 
@@ -173,14 +176,17 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		};
 		this.phaselineStyles = {
 			'phaseline' : 		{
-									'stroke-width' : 1.5,
-									'stroke' : '#404040'
+									'stroke-opacity': .9,
+									'stroke-width' : 1,
+									'stroke' : '#666'
 								},
 			'phaseline-floor' : {
-									'text-anchor' : 'start'
+									'text-anchor' : 'start',
+									'font-size' : 9
 								},
 			'phaseline-note' : 	{
-									'text-anchor' : 'middle'
+									'text-anchor' : 'middle',
+									'font-size' : 9
 								}
 		}
 		this.chartStyles = {
@@ -587,53 +593,105 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
         return nextMetric;
 	}
 
+	Chart.prototype.createPhaselineTouchEvents = function() {
+		var chart = this;
+		var modal = document.getElementById('modal');
+		var addPhaseline = document.getElementById('add-phaseline');
+		var removePhaseline = document.getElementById('remove-phaseline');
+		var cancelPhaseline = document.getElementById('phaseline-cancel');
+		var savePhaseline = document.getElementById('phaseline-submit');
+
+		addPhaseline.addEventListener('click', addPhaselineHandler, false);
+		addPhaseline.addEventListener('touchstart', addPhaselineHandler, false);
+		cancelPhaseline.addEventListener('click', cancelPhaselineHandler, false);
+		cancelPhaseline.addEventListener('touchstart', cancelPhaselineHandler, false);
+		savePhaseline.addEventListener('click', savePhaselineHandler, false);
+		savePhaseline.addEventListener('touchstart', savePhaselineHandler, false);
+		removePhaseline.addEventListener('click', removePhaselineHandler, false);
+		removePhaseline.addEventListener('touchstart', removePhaselineHandler, false);
+
+		function addPhaselineHandler(e) {
+			e.preventDefault();
+			modal.style.display = 'block';
+		}
+
+		function cancelPhaselineHandler(e) {
+			e.preventDefault();
+			modal.style.display = 'none';
+		}
+
+		function savePhaselineHandler(e) {
+			e.preventDefault();
+			var floorValue = document.getElementById('phaseline-floor').value;
+			var typeValue = document.getElementById('phaseline-type').value;
+			var noteValue = document.getElementById('phaseline-note').value;
+			chart.phaseline['phaseline'] = new PhaseLine(chart, chart.activeDay, typeValue, noteValue, floorValue);
+			modal.style.display = 'none';
+			addPhaseline.style.display = 'none';
+			removePhaseline.style.display = 'block';
+		}
+
+		function removePhaselineHandler(e) {
+			e.preventDefault();
+			chart.phaseline['phaseline'].paperObject.remove();
+			removePhaseline.style.display = 'none';
+			addPhaseline.style.display = 'block';
+		}
+	}
+
 	Chart.prototype.createAdjustmentsTouchEvents = function() {
 		var chart = this;
 		var addNodes = document.getElementsByClassName("add");
-		for (var i = 0; i < addNodes.length; i++) {
-			addNodes[i].addEventListener("click", function(e){
-				e.preventDefault();
-				var label = this.getAttribute('id'); // get the id of the div that was clicked
-
-				if (label === "add-correct") {
-					chart.metric['corrects']['metric'].changeValueAndMarker(1);
-				}
-
-				if (label === "add-floor") {
-					chart.metric['floor']['metric'].changeValueAndMarker(1);
-				}
-
-				if (label === "add-error") {
-					chart.metric['errors']['metric'].changeValueAndMarker(1);
-				}
-
-				if (label === "add-trial") {
-					chart.metric['trials']['metric'].changeValueAndMarker(1);
-				}
-			})
-		}
 		var subtractNodes = document.getElementsByClassName("subtract");
 		for (var i = 0; i < addNodes.length; i++) {
-			subtractNodes[i].addEventListener("click", function(e){
-				e.preventDefault();
-				var label = this.getAttribute('id'); // get the id of the div that was clicked
+			addNodes[i].addEventListener("click", addNodesHandler, false);
+			addNodes[i].addEventListener("touchstart", addNodesHandler, false);
+		}
+		for (var i = 0; i < addNodes.length; i++) {
+			subtractNodes[i].addEventListener("click", subtractNodesHandler, false);
+			subtractNodes[i].addEventListener("touchstart", subtractNodesHandler, false);
+		}
 
-				if (label === "sub-correct") {
-					chart.metric['corrects']['metric'].changeValueAndMarker(-1);
-				}
+		function addNodesHandler(e){
+			e.preventDefault();
+			var label = this.getAttribute('id'); // get the id of the div that was clicked
 
-				if (label === "sub-floor") {
-					chart.metric['floor']['metric'].changeValueAndMarker(-1);
-				}
+			if (label === "add-correct") {
+				chart.metric['corrects']['metric'].changeValueAndMarker(1);
+			}
 
-				if (label === "sub-error") {
-					chart.metric['errors']['metric'].changeValueAndMarker(-1);
-				}
+			if (label === "add-floor") {
+				chart.metric['floor']['metric'].changeValueAndMarker(1);
+			}
 
-				if (label === "sub-trial") {
-					chart.metric['trials']['metric'].changeValueAndMarker(-1);
-				}
-			})
+			if (label === "add-error") {
+				chart.metric['errors']['metric'].changeValueAndMarker(1);
+			}
+
+			if (label === "add-trial") {
+				chart.metric['trials']['metric'].changeValueAndMarker(1);
+			}
+		}
+
+		function subtractNodesHandler(e){
+			e.preventDefault();
+			var label = this.getAttribute('id'); // get the id of the div that was clicked
+
+			if (label === "sub-correct") {
+				chart.metric['corrects']['metric'].changeValueAndMarker(-1);
+			}
+
+			if (label === "sub-floor") {
+				chart.metric['floor']['metric'].changeValueAndMarker(-1);
+			}
+
+			if (label === "sub-error") {
+				chart.metric['errors']['metric'].changeValueAndMarker(-1);
+			}
+
+			if (label === "sub-trial") {
+				chart.metric['trials']['metric'].changeValueAndMarker(-1);
+			}
 		}
 	}
 });
