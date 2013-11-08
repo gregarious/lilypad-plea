@@ -12,7 +12,9 @@ angular.module('plea').factory('Chart', function(Backbone, dayMetricDataStore, p
 
         /**
          * Add a new DayMetric to the chart.
-         * @param {DailyRecord} DailyRecord model instance
+         * @param {Date} date for metric
+         * @param {String} type of metric (e.g. 'corrects')
+         * @param {Number} value of metric
          */
         addDayMetric: function(date, type, value) {
             console.warn('addDayMetric stub called: %s, %s, %d', date, type, value);
@@ -29,10 +31,11 @@ angular.module('plea').factory('Chart', function(Backbone, dayMetricDataStore, p
 
         /**
          * Add a phase line.
-         * @param {PhaseLine} PhaseLine model instance
+         * @param {Date} date for PhaseLine
+         * @param {String} title for PhaseLine
          */
-        addPhaseLine: function(phaseLine) {
-            console.warn('addDayMetric stub called');
+        addPhaseLine: function(date, title) {
+            console.warn('phaseLine stub called: %s, %s', date, title);
         },
 
         /**
@@ -93,7 +96,7 @@ angular.module('plea').factory('PhaseLine', function(Backbone) {
 angular.module('plea').factory('chartDataStore', function(Chart) {
     var studentChartCollectionFactory = function(student) {
         return new (Backbone.Collection.extend({
-            url: student.get('chartsUrl'),
+            url: '/plea/students/' + student.id + '/charts/',
             model: Chart
         }))();
     };
@@ -136,7 +139,7 @@ angular.module('plea').factory('chartDataStore', function(Chart) {
 angular.module('plea').factory('dayMetricDataStore', function(DayMetric) {
     var chartDayMetricCollectionFactory = function(chart) {
         return new (Backbone.Collection.extend({
-            url: chart.get('dayMetricsUrl'),
+            url: '/plea/charts/' + chart.id + '/daymetrics/',
             model: DayMetric
         }))();
     };
@@ -179,7 +182,7 @@ angular.module('plea').factory('dayMetricDataStore', function(DayMetric) {
 angular.module('plea').factory('phaseLineDataStore', function(PhaseLine) {
     var chartPhaseLineCollectionFactory = function(chart) {
         return new (Backbone.Collection.extend({
-            url: chart.get('phaseLinesUrl'),
+            url: '/plea/charts/' + chart.id + '/phaselines/',
             model: PhaseLine
         }))();
     };

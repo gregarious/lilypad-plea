@@ -57,7 +57,7 @@ angular.module('plea').factory('BehaviorType', function(Backbone) {
 angular.module('plea').factory('behaviorIncidentDataStore', function(BehaviorIncident) {
     var studentBehaviorIncidentCollectionFactory = function(student) {
         return new (Backbone.Collection.extend({
-            url: student.get('behaviorIncidentsUrl'),
+            url: '/plea/students/' + student.id + '/behaviorincidents/',
             model: BehaviorIncident,
 
             // sort by date, decreasing order
@@ -110,7 +110,7 @@ angular.module('plea').factory('behaviorIncidentDataStore', function(BehaviorInc
 angular.module('plea').factory('behaviorTypeDataStore', function(BehaviorType) {
     var studentBehaviorTypeCollectionFactory = function(student) {
         return new (Backbone.Collection.extend({
-            url: student.get('behaviorTypesUrl'),
+            url: '/plea/students/' + student.id + '/behaviortypes/',
             model: BehaviorType
         }))();
     };
