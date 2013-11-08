@@ -68,7 +68,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		this.numberOfDays = 140;
 		this.minExponent = -3;
 		this.maxExponent = 3;
-		this.activeDay = 1;
+		this.activeDay = $scope.dailyRecords.length + 1;
 		//a decade is the section between two exponents of ten on the chart
 		//for example, a decade could be from 1-10 or 0.01-0.1
 		this.numberOfDecades = Math.abs(this.minExponent) + Math.abs(this.maxExponent);
@@ -81,20 +81,20 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		this.createPaperDrawingArea();
 		this.setObjects();
 		this.setStyles();
-		this.drawHistoricalData($scope.dailyRecords);
 		this.drawXAxis();
 		this.drawYAxis();
+		this.drawHistoricalData($scope.dailyRecords);
 		this.createChartTouchEvents();
 		this.createAdjustmentsTouchEvents();
 	}
 
 	Chart.prototype.setDimensions = function() {
 		var width = window.innerWidth;
-		var height = window.innerHeight;
+		var height = window.innerHeight * 0.9;
 
 		//specify margins based on width and height of window
 		this.bottomMargin = height * 0.05;
-		this.topMargin = height * 0.05;
+		this.topMargin = height * 0.075;
 		this.leftMargin = width * 0.05;
 		this.rightMargin = width * 0.05;
 
@@ -117,7 +117,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 	Chart.prototype.createPaperDrawingArea = function() {
 		var that = this;
 		var width = window.innerWidth;
-		var height = window.innerHeight;
+		var height = window.innerHeight * 0.9;
 		this.paper = new Raphael(that.drawArea, width, height);
 	}
 
@@ -151,7 +151,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		this.metricStyles = {
 			'filled-circle' : 	{
 									'fill-opacity': 1,
-							   		'fill': '#7FFF00',
+							   		'fill': '#4ABEA4',
 							   		'stroke': 0,
 							   		'opacity': .9
 							   	},
@@ -182,51 +182,52 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		}
 		this.chartStyles = {
 			//horizontal lines and labels
+			//#A6C5D3
 			'decadebaseline' : {
 				'weight' : '1.1',
-				'color' : '#A6C5D3'
+				'color' : '#ccc'
 			},
 			'decadebaselabel' : {
-				'font-size' : 15,
+				'font-size' : 12,
 				'text-anchor' : 'end',
-				'color' : '#A6C5D3'
+				'color' : '#ccc'
 			},
 			'intermediateline' : {
 				'weight' : '0.4',
-				'color' : '#A6C5D3'
+				'color' : '#ccc'
 			},
 			'middleline' : {
 				'weight' : '0.8',
-				'color' : '#A6C5D3'
+				'color' : '#ccc'
 			},
 			'middlelabel' : {
 				'font-size' : 10,
 				'text-anchor' : 'end',
-				'color' : '#A6C5D3'
+				'color' : '#ccca'
 			},
 			'floorlabel' : {
 				'font-size' : 10,
 				'text-anchor' : 'start',
-				'color' : '#A6C5D3'
+				'color' : '#ccc'
 			},
 			// vertical lines and labels
 			'weekline' : {
 				'weight' : '1',
-				'color' : '#A6C5D3'
+				'color' : '#ccc'
 			},
 			'weeklabel' : {
-				'font-size' : 14,
+				'font-size' : 11,
 				'text-anchor' : 'middle',
-				'color' : '#A6C5D3'
+				'color' : '#ccc'
 			},
 			'activedayline' : {
 				'weight' : '1',
-				'color' : '#0000FF'
+				'color' : '#111'
 			},
 			'activedaylabel' : {
 				'font-size' : 8,
 				'text-anchor' : 'middle',
-				'color' : '#0000FF'
+				'color' : '#111'
 			}
 		}
 	}
@@ -246,11 +247,11 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 			var decadeBasePosition = chartBottomY - (decadeNumber*this.decadeHeight);
 
 			//draw the baseline's value label
-			this.drawLabel(lineStartX - this.labelPadding, decadeBasePosition, decadeBaseValue, this.chartStyles['decadebaselabel']);
+			this.drawLabel(lineStartX - this.labelPadding*1.5, decadeBasePosition, decadeBaseValue, this.chartStyles['decadebaselabel']);
 
 			//draw floor label for baseline
 			var labelText;
-			var floorPadding = 70;
+			var floorPadding = 62;
 			if (decadeBaseValue <= 1) labelText = 1/decadeBaseValue + "'";
 			else labelText = "";
 			var endX = lineEndX + 1.7*this.baseTickLength;
@@ -263,7 +264,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 				var topDecadePosition = decadeBasePosition - this.decadeHeight;
 				var topDecadeValue = Math.pow(10, this.minExponent + i + 1);
 				this.drawHorizontalLine(lineStartX - this.baseTickLength, lineEndX + this.baseTickLength, topDecadePosition, this.chartStyles['decadebaseline']);
-				this.drawLabel(lineStartX - this.labelPadding, topDecadePosition, topDecadeValue, this.chartStyles['decadebaselabel']);
+				this.drawLabel(lineStartX - this.labelPadding*1.5, topDecadePosition, topDecadeValue, this.chartStyles['decadebaselabel']);
 			}
 
 			//draw all lines in between baselines
@@ -281,7 +282,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		var vertLabelPadding = this.labelPadding + 10;
 
 		for (var i = 0; i <= this.numberOfDays; i++) {
-			//draw blue line representing today's line
+			//draw black line representing today's line
 			if (i === this.activeDay) {
 				this.drawLabel(startX + i*spacing, lineStartY - this.labelPadding, 'TODAY', this.chartStyles['activedaylabel']);
 				this.drawVerticalLine(startX + i*spacing, lineStartY, lineEndY, this.chartStyles['activedayline'], true, i);
@@ -343,7 +344,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		for (var j = 2; j < 10; j++) {
 			var lineValue = j * decadeBaseValue;
 			var intermediateLineYPosition = this.valueToYPosition(decadeBasePosition, lineValue, decadeBaseValue);
-			var floorPadding = 70;
+			var floorPadding = 62;
 
 			//only draw line with ticks and labels on the fifth line in the decade
 			//(this is just how the chart is designed)
@@ -438,7 +439,6 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 			if (dailyRecords.floors !== null) {
 				this.drawHistoricalFloors(dayPosition, dailyRecords[i].floor);
 			}
-			this.activeDay++;
 		}
 	}
 
@@ -520,6 +520,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		// draw point on active day line
 		chart.hammertime.on("tap", function(event){
 			event.preventDefault();
+			document.getElementById("adjustments").style.display = "block";
 			var chartBottomY = chart.chartHeight + chart.topMargin;
 			var y = chartBottomY - (event.gesture.touches[0].pageY-event.target.offsetTop);
 
