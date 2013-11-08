@@ -89,47 +89,47 @@
             </div>
             <div id="adjustments">
                 <div class="adjustment-section">
-                        <h4>John Smith</h4>
+                    <h3>{{mainViewState.selectedStudent.get('firstName')}} {{mainViewState.selectedStudent.get('lastName')}}</h3>
                 </div>
                 <!--<div class="seesay">see/say</div>
                 <div class="colors">colors</div>-->
                 <div class="adjustment-section" id="floor-section">
-                    <label id="floor-label" class="label" for="floor-input">
-                        Floor
-                    </label>
-                    <button id="sub-floor" class="btn subtract">&#8722;</button>
-                    <input type="text" name="floor-input" id="floor" class="input"></input>
-                    <button id="add-floor" class="btn add">+</button>
+                    <h2>Floor</h2>
+                    <div id="floor-adjuster" class="adjuster">
+                        <div id="sub-floor" class="btn subtract">&#8722;</div>
+                        <div id="floor" class="marker-value"></div>
+                        <div id="add-floor" class="btn add">+</div>
+                    </div>
                 </div>
                 <div class="adjustment-section" id="corrects-section">
-                    <label id="correct-label" class="label" for="correct-input">
-                        Corrects
-                    </label>
-                    <button id="sub-correct" class="btn subtract">&#8722;</button>
-                    <input type="text" name="correct-input" id="corrects" class="input"></input>
-                    <button id="add-correct" class="btn add">+</button>
+                    <h2>Corrects</h2>
+                    <div id="corrects-adjuster" class="adjuster">
+                        <div id="sub-correct" class="btn subtract">&#8722;</div>
+                        <div id="corrects" class="marker-value"></div>
+                        <div id="add-correct" class="btn add">+</div>
+                    </div>
                 </div>
                 <div class="adjustment-section" id="errors-section">
-                    <label id="error-label" class="label" for="error-input">
-                        Errors
-                    </label>
-                    <button id="sub-error" class="btn subtract">&#8722;</button>
-                    <input type="text" name="error-input" id="errors" class="input"></input>
-                    <button id="add-error" class="btn add">+</button>
+                    <h2>Errors</h2>
+                    <div id="errors-adjuster" class="adjuster">
+                        <div id="sub-error" class="btn subtract">&#8722;</div>
+                        <div id="errors" class="marker-value"></div>
+                        <div id="add-error" class="btn add">+</div>
+                    </div>
                 </div>
                 <div class="adjustment-section" id="trials-section">
-                    <label id="trial-label" class="label" for="trial-input">
-                        Trials
-                    </label>
-                    <button id="sub-trial" class="btn subtract">&#8722;</button>
-                    <input type="text" name="trial-input" id="trials" class="input"></input>
-                    <button id="add-trial" class="btn add">+</button>
+                    <h2>Trials</h2>
+                    <div id="trials-adjuster" class="adjuster">
+                        <div id="sub-trial" class="btn subtract">&#8722;</div>
+                        <div id="trials" class="marker-value"></div>
+                        <div id="add-trial" class="btn add">+</div>
+                    </div>
                 </div>
 
                 <div class="adjustment-section">
-                    <label id="phaseline-label" class="label">Phase Line</label>
-                    <button id="phaseline" class="btn">Add Phase Line</button>
-                    <button id="remove-phaseline" class="btn">Remove Phase Line</button>
+                    <div id="add-phaseline">
+                        Add Phaseline
+                    </div>
                 </div>
             </div>
 
@@ -209,6 +209,5 @@
         </div>
     </div>
 
-    <script type=""
 </body>
 </html>

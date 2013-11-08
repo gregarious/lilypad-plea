@@ -125,5 +125,83 @@ body {
   	width: 200px;
   	top: 0;
   	height: 100%;
+  	padding-top: 50px;
   	border-left: 1px solid #CCC;
+}
+
+.adjustment-section {
+	width: 100%;
+	overflow: hidden;
+	min-height: 50px;
+}
+
+.adjustment-section h3 {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 15px 0 0 15px;
+}
+
+.adjustment-section h2 {
+	margin: 13px 0 5px 15px;
+	font-size: 13px;
+}
+
+.adjuster {
+	margin: 0 15px;
+	width: 170px;
+	height: 45px;
+}
+
+.adjuster div {
+	display: inline-block;
+	vertical-align: middle;
+	overflow: hidden;
+	color: white;
+	line-height: 45px;
+	height: 100%;
+	text-align: center;
+}
+
+
+.adjuster .btn {
+	width: 40px;
+}
+
+#floor-adjuster {
+	background-color: #6C84B4;
+}
+
+#corrects-adjuster {
+	background-color: #4ABEA4;
+}
+
+#errors-adjuster {
+	background-color: #B35F5F
+}
+
+#trials-adjuster {
+	background-color: #D1896B;
+}
+
+#add-phaseline {
+	margin: 28px 15px 0 15px;
+	padding: 14px 0;
+	text-align: center;
+	color: white;
+	background-color: #777;
+}
+
+.marker-value {
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	font-size: 30px;
+	width: 80px;
+}
+
+.subtract {
+	padding-left: 4px;
+}
+
+.add {
+	padding-right: 4px;
 }

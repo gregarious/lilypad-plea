@@ -6,6 +6,8 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
     /**
      * $scope initialization
      */
+
+    document.body.onselectstart = function() { return false; }
     $scope.chart = mainViewState.selectedChart;
     // upon fetching data, this array will be filled with bare Javascript
     // objects of the form: {date: '2013-09-03', floor: 40, correct: 40, etc.}
@@ -157,15 +159,16 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 							   	},
 			'line' : 			{
 									'stroke-width': '1',
-						 			'stroke': '#000'
+						 			'stroke': '#6C84B4'
 						 		},
 			'cross' : 			{
 									'stroke-width': '1',
-					    			'stroke': "#F62817",
+					    			'stroke': "#B35F5F",
 					    			'opacity': .9
 					    		},
 			'empty-circle' : 	{
-									'fill-opacity': 0
+									'fill-opacity': 0,
+									'stroke': '#D1896B'
 								}
 		};
 		this.phaselineStyles = {
@@ -251,7 +254,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 
 			//draw floor label for baseline
 			var labelText;
-			var floorPadding = 62;
+			var floorPadding = 58;
 			if (decadeBaseValue <= 1) labelText = 1/decadeBaseValue + "'";
 			else labelText = "";
 			var endX = lineEndX + 1.7*this.baseTickLength;
@@ -344,7 +347,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		for (var j = 2; j < 10; j++) {
 			var lineValue = j * decadeBaseValue;
 			var intermediateLineYPosition = this.valueToYPosition(decadeBasePosition, lineValue, decadeBaseValue);
-			var floorPadding = 62;
+			var floorPadding = 58;
 
 			//only draw line with ticks and labels on the fifth line in the decade
 			//(this is just how the chart is designed)
@@ -540,7 +543,7 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		// update the marker on the chart
         // find it and set it to the new value
         var htmlMetricIDTag = document.getElementById(metricName);
-        htmlMetricIDTag.value=chart.metric[metricName]['metric'].value;
+        htmlMetricIDTag.innerHTML=chart.metric[metricName]['metric'].value;
         //$(htmlMetricID).val(chart.metric[metricName]['metric'].value);
 
         // highlight the corresponding setion for this metric in the adjustments panel
