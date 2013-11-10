@@ -30,6 +30,7 @@ a {
   width: 200px;
   height: 100%;
   background: #dadee4;
+  font-size: 14px;
 }
 #sidebar ul {
   margin: 0;
@@ -53,6 +54,10 @@ a {
   color: #000000;
 }
 
+.studentFirstName {
+  font-weight: bold;
+} 
+
 #mainPanel {
   margin: 44px 0 0 200px;
   padding-left: 30px;
@@ -60,7 +65,8 @@ a {
 
 #mainPanel h2 {
   font-size: 1.5em;
-  margin: 0 0 24px 0;
+  margin: 0 30px 24px 0;
+  border-bottom: 1px solid #dadde3;
 }
 
 #mainPanel ul {

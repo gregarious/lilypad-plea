@@ -61,7 +61,7 @@
         <!--<h1>Students (Total: {{studentCount}})</h1>-->
         <ul>
             <li ng-repeat="student in studentCollection.models">
-                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}">{{student.get('firstName')}}</a>
+                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}"><span class="studentFirstName">{{student.get('firstName')}}</span> {{student.get('lastName')}}</a>
             </li>
         </ul>
     </div>
@@ -72,7 +72,7 @@
         <div id="chartSelection"
              ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
              ng-controller="ChartSelectionCtrl">
-            <!--<h2>{{mainViewState.selectedStudent.get('firstName')}}'s--> <h2>Charts</h2>
+            <!--<h2>{{mainViewState.selectedStudent.get('firstName')}}'s--> <h2 class="charts">Charts</h2>
             <!-- Always list the scattplot, then cycle through other charts -->
             <ul>
                 <li><a href="" ng-click="selectScatterplot()">Behavior Scatterplot</a></li>
