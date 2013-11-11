@@ -9,27 +9,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 
-    <!-- simple skeleton styling -->
-    <style type="text/css">
-        * {
-            box-sizing: border-box;
-        }
-        a {
-            text-decoration: none;
-            color: #00f;
-        }
-        .selected {
-            font-weight: bold;
-        }
-        .frame {
-            border: 1px solid;
-            margin: 1em 0;
-            padding: 1em;
-        }
-        td {
-            text-align: right;
-        }
-    </style>
+    <link href="/lilypad-client/lilypad-plea/app/main/styles/reset.css" rel="stylesheet" type="text/css">
+    <link href="/lilypad-client/lilypad-plea/app/main/styles/main.css" rel="stylesheet" type="text/css">
 
     <!-- angular -->
     <script src="/lilypad-client/lilypad-plea/app/lib/angular-1.2.0-rc.2.js"></script>
@@ -69,18 +50,23 @@
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/studentSelectionCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartSelectionCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/metric.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/controllers/phaseline.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/chartCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/controllers/behaviorCtrl.js"></script>
     <script src="/lilypad-client/lilypad-plea/app/main/filters.js"></script>
 
 </head>
 <body ng-controller="MainCtrl">
+
+    <div id="header">
+        <div class="inner"><img class="logo" src="/lilypad-client/lilypad-plea/app/main/images/logo.png" alt="Lilypad Logo"><span> Lilypad</span></div>
+    </div>
     <!-- "Sidebar" showing a list of students -->
-    <div id="sidebar" ng-controller="StudentSelectionCtrl" class="frame">
-        <h1>Students (Total: {{studentCount}})</h1>
+    <div id="sidebar" ng-if="!mainViewState.selectedChart" ng-controller="StudentSelectionCtrl" >
+        <!--<h1>Students (Total: {{studentCount}})</h1>-->
         <ul>
             <li ng-repeat="student in studentCollection.models">
-                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}">{{student.get('firstName')}}</a>
+                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}">{{student.get('firstName')}} <span>{{student.get('lastName')}}</span></a>
             </li>
         </ul>
     </div>
@@ -105,57 +91,86 @@
         <div id="chart"
             ng-if="mainViewState.selectedChart"
             ng-controller="ChartCtrl">
+            <div id="goBack" ng-click="goBack()">Back</div>
             <h3>{{chart.getLabel()}}</h3>
             <h4>Day Metrics</h4>
             <div id="draw" ng-show="dailyRecords.length">
             </div>
             <div id="adjustments">
                 <div class="adjustment-section">
-                        <h4>John Smith</h4>
+                    <h3>{{mainViewState.selectedStudent.get('firstName')}} {{mainViewState.selectedStudent.get('lastName')}}</h3>
                 </div>
                 <!--<div class="seesay">see/say</div>
                 <div class="colors">colors</div>-->
                 <div class="adjustment-section" id="floor-section">
-                    <label id="floor-label" class="label" for="floor-input">
-                            Floor
-                    </label>
-                    <button id="sub-floor" class="btn subtract">&#8722;</button>
-                    <input type="text" name="floor-input" id="floor" class="input"></input>
-                    <button id="add-floor" class="btn add">+</button>
+                    <h2>Floor</h2>
+                    <div id="floor-adjuster" class="adjuster">
+                        <div id="sub-floor" class="btn subtract">&#8722;</div>
+                        <div id="floor" class="marker-value"></div>
+                        <div id="add-floor" class="btn add">+</div>
+                    </div>
                 </div>
                 <div class="adjustment-section" id="corrects-section">
-                    <label id="correct-label" class="label" for="correct-input">
-                            Corrects
-                    </label>
-                    <button id="sub-correct" class="btn subtract">&#8722;</button>
-                    <input type="text" name="correct-input" id="corrects" class="input"></input>
-                    <button id="add-correct" class="btn add">+</button>
+                    <h2>Corrects</h2>
+                    <div id="corrects-adjuster" class="adjuster">
+                        <div id="sub-correct" class="btn subtract">&#8722;</div>
+                        <div id="corrects" class="marker-value"></div>
+                        <div id="add-correct" class="btn add">+</div>
+                    </div>
                 </div>
                 <div class="adjustment-section" id="errors-section">
-                    <label id="error-label" class="label" for="error-input">
-                            Errors
-                    </label>
-                    <button id="sub-error" class="btn subtract">&#8722;</button>
-                    <input type="text" name="error-input" id="errors" class="input"></input>
-                    <button id="add-error" class="btn add">+</button>
+                    <h2>Errors</h2>
+                    <div id="errors-adjuster" class="adjuster">
+                        <div id="sub-error" class="btn subtract">&#8722;</div>
+                        <div id="errors" class="marker-value"></div>
+                        <div id="add-error" class="btn add">+</div>
+                    </div>
                 </div>
                 <div class="adjustment-section" id="trials-section">
-                    <label id="trial-label" class="label" for="trial-input">
-                            Trials
-                    </label>
-                    <button id="sub-trial" class="btn subtract">&#8722;</button>
-                    <input type="text" name="trial-input" id="trials" class="input"></input>
-                    <button id="add-trial" class="btn add">+</button>
+                    <h2>Trials</h2>
+                    <div id="trials-adjuster" class="adjuster">
+                        <div id="sub-trial" class="btn subtract">&#8722;</div>
+                        <div id="trials" class="marker-value"></div>
+                        <div id="add-trial" class="btn add">+</div>
+                    </div>
                 </div>
 
                 <div class="adjustment-section">
-                    <label id="phaseline-label" class="label">Phase Line</label>
-                    <button id="phaseline" class="btn">Add Phase Line</button>
-                    <button id="remove-phaseline" class="btn">Remove Phase Line</button>
+                    <div id="add-phaseline">
+                        Add Phaseline
+                    </div>
+                    <div id="remove-phaseline">
+                        Remove Phaseline
+                    </div>
                 </div>
             </div>
 
-            <div class="modal hide fade" id="addPhaseline" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div id="modal">   
+                <div id="phaseline-form">
+                    <div id="phaseline-header">
+                        New Phaseline
+                    </div>
+                    <div id="phaseline-body">
+                        <div class="row">
+                            <label class="label">Phaseline Floor Value:</label>
+                            <input id="phaseline-floor" type="text" />
+                        </div>
+                        <div class="row">
+                            <label class="label">Description: </label>
+                            <input id="phaseline-type" type="text">
+                        </div>
+                        <div class="row">
+                            <label class="label">Additional Notes: </label>
+                            <input id="phaseline-note" type="text">
+                        </div>
+                        <div class="row">
+                            <div id="phaseline-cancel">Cancel</div>
+                            <div id="phaseline-submit">Save</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <!-- <div class="modal hide fade" id="addPhaseline" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3>Phaseline</h3>
@@ -176,33 +191,12 @@
                 <div class="modal-footer">
                     <button id="add-phaseline" class="btn">Add Phaseline</button>
                 </div>
-            </div>
-            <!-- If there is Celleration chart data, show a table of it -->
-            <!--<table ng-show="dailyRecords.length">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Floor</th>
-                        <th>Corrects</th>
-                        <th>Errors</th>
-                        <th>Trials</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="record in dailyRecords">
-                        <td>{{record.date | formatDate:'l'}} </td>
-                        <td>{{record.floor}}</td>
-                        <td>{{record.corrects}}</td>
-                        <td>{{record.errors}}</td>
-                        <td>{{record.trials}}</td>
-                    </tr>
-                </tbody>
-            </table>-->
+            </div>-->
             <!-- If there is no chart data, print this message -->
             <div ng-show="!dailyRecords.length">No metrics found.</div>
 
             <!-- Show a table of phase line data, or a message if there are no entries -->
-            <h4>Phase Lines</h4>
+            <!--<h4>Phase Lines</h4>
             <table ng-show="phaseLineCollection.models.length">
                 <thead>
                     <tr>
@@ -217,7 +211,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div ng-show="!phaseLineCollection.models.length">No phase lines found.</div>
+            <div ng-show="!phaseLineCollection.models.length">No phase lines found.</div>-->
         </div>
 
         <!-- Scatterplot detail (shown when scatterplot is selected) -->
@@ -252,6 +246,5 @@
         </div>
     </div>
 
-    <script type=""
 </body>
 </html>
