@@ -2,16 +2,18 @@
 <html ng-app="plea">
 <head>
     <title>Lilypad - PLEA</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
     <!-- For that native webapp experience -->
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
 
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-
+<!--
     <link href="/lilypad-client/lilypad-plea/app/main/styles/reset.css" rel="stylesheet" type="text/css">
     <link href="/lilypad-client/lilypad-plea/app/main/styles/main.css" rel="stylesheet" type="text/css">
-
+-->
+	<link rel="stylesheet" href="styles.css" type="text/css">
     <!-- angular -->
     <script src="/lilypad-client/lilypad-plea/app/lib/angular-1.2.0-rc.2.js"></script>
 
@@ -27,11 +29,11 @@
 
 
     <!-- main module declaration -->
-    <script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>
+    <!--<script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>-->
 
     <!-- if developing with no back end, uncomment these two lines and comment out the one above -->
-    <!--<script src="/lilypad-client/lilypad-plea/app/lib/angular-mocks.js"></script>
-    <script src="/lilypad-client/lilypad-plea/app/main/moduleNoBackend.js"></script>-->
+    <script src="/lilypad-client/lilypad-plea/app/lib/angular-mocks.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/moduleNoBackend.js"></script>
 
     <!-- student-related files -->
     <script src="/lilypad-client/lilypad-plea/app/students/models.js"></script>
@@ -55,6 +57,7 @@
 
 </head>
 <body ng-controller="MainCtrl">
+<<<<<<< HEAD
 
     <div id="header">
         <div class="inner"><img class="logo" src="/lilypad-client/lilypad-plea/app/main/images/logo.png" alt="Lilypad Logo"><span> Lilypad</span></div>
@@ -65,6 +68,18 @@
         <ul>
             <li ng-repeat="student in studentCollection.models">
                 <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}">{{student.get('firstName')}} <span>{{student.get('lastName')}}</span></a>
+=======
+	<!-- Titlebar -->
+	<div id="titlebar">
+		<h1>This teacher's students</h1>
+	</div>
+    <!-- "Sidebar" showing a list of students -->
+    <div id="sidebar" ng-controller="StudentSelectionCtrl" class="frame">
+        <!--<h1>Students (Total: {{studentCount}})</h1>-->
+        <ul>
+            <li ng-repeat="student in studentCollection.models">
+                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}"><span class="studentFirstName">{{student.get('firstName')}}</span> {{student.get('lastName')}}</a>
+>>>>>>> design
             </li>
         </ul>
     </div>
@@ -75,7 +90,7 @@
         <div id="chartSelection"
              ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
              ng-controller="ChartSelectionCtrl">
-            <h2>{{mainViewState.selectedStudent.get('firstName')}}'s Charts</h2>
+            <!--<h2>{{mainViewState.selectedStudent.get('firstName')}}'s--> <h2 class="charts">Charts</h2>
             <!-- Always list the scattplot, then cycle through other charts -->
             <ul>
                 <li><a href="" ng-click="selectScatterplot()">Behavior Scatterplot</a></li>
@@ -89,8 +104,12 @@
         <div id="chart"
             ng-if="mainViewState.selectedChart"
             ng-controller="ChartCtrl">
+<<<<<<< HEAD
             <div id="goBack" ng-click="goBack()">Back</div>
             <h3>{{chart.getLabel()}}</h3>
+=======
+            <h2>{{chart.getLabel()}}</h2>
+>>>>>>> design
             <h4>Day Metrics</h4>
             <div id="draw" ng-show="dailyRecords.length">
             </div>
