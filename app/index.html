@@ -13,7 +13,7 @@
     <link href="/lilypad-client/lilypad-plea/app/main/styles/reset.css" rel="stylesheet" type="text/css">
     <link href="/lilypad-client/lilypad-plea/app/main/styles/main.css" rel="stylesheet" type="text/css">
 -->
-	<link rel="stylesheet" href="styles.css" type="text/css">
+	<link rel="stylesheet" href="/lilypad-client/lilypad-plea/app/styles.css" type="text/css">
     <!-- angular -->
     <script src="/lilypad-client/lilypad-plea/app/lib/angular-1.2.0-rc.2.js"></script>
 
@@ -57,29 +57,15 @@
 
 </head>
 <body ng-controller="MainCtrl">
-<<<<<<< HEAD
-
-    <div id="header">
-        <div class="inner"><img class="logo" src="/lilypad-client/lilypad-plea/app/main/images/logo.png" alt="Lilypad Logo"><span> Lilypad</span></div>
-    </div>
-    <!-- "Sidebar" showing a list of students -->
-    <div id="sidebar" ng-if="!mainViewState.selectedChart" ng-controller="StudentSelectionCtrl" >
-        <!--<h1>Students (Total: {{studentCount}})</h1>-->
-        <ul>
-            <li ng-repeat="student in studentCollection.models">
-                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}">{{student.get('firstName')}} <span>{{student.get('lastName')}}</span></a>
-=======
 	<!-- Titlebar -->
 	<div id="titlebar">
 		<h1>This teacher's students</h1>
 	</div>
     <!-- "Sidebar" showing a list of students -->
-    <div id="sidebar" ng-controller="StudentSelectionCtrl" class="frame">
-        <!--<h1>Students (Total: {{studentCount}})</h1>-->
+    <div id="sidebar" ng-if="!mainViewState.selectedChart" ng-controller="StudentSelectionCtrl" class="frame">
         <ul>
             <li ng-repeat="student in studentCollection.models">
                 <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}"><span class="studentFirstName">{{student.get('firstName')}}</span> {{student.get('lastName')}}</a>
->>>>>>> design
             </li>
         </ul>
     </div>
@@ -104,12 +90,8 @@
         <div id="chart"
             ng-if="mainViewState.selectedChart"
             ng-controller="ChartCtrl">
-<<<<<<< HEAD
             <div id="goBack" ng-click="goBack()">Back</div>
-            <h3>{{chart.getLabel()}}</h3>
-=======
             <h2>{{chart.getLabel()}}</h2>
->>>>>>> design
             <h4>Day Metrics</h4>
             <div id="draw" ng-show="dailyRecords.length">
             </div>
@@ -162,7 +144,7 @@
                 </div>
             </div>
 
-            <div id="modal">   
+            <div id="modal">
                 <div id="phaseline-form">
                     <div id="phaseline-header">
                         New Phaseline
