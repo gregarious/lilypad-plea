@@ -27,13 +27,13 @@
 
 
     <!-- main module declaration -->
-    <script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>
+   <script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>
 
     <!-- if developing with no back end, uncomment these two lines and comment out the one above -->
-    <!--
-    <script src="/lilypad-client/lilypad-plea/app/lib/angular-mocks.js"></script>
-    <script src="/lilypad-client/lilypad-plea/app/main/moduleNoBackend.js"></script>
-    -->
+    
+    <!--<script src="/lilypad-client/lilypad-plea/app/lib/angular-mocks.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/moduleNoBackend.js"></script>-->
+    
 
     <!-- student-related files -->
     <script src="/lilypad-client/lilypad-plea/app/students/models.js"></script>
@@ -59,7 +59,7 @@
 <body ng-controller="MainCtrl">
 
     <div id="header">
-        <div class="inner"><img class="logo" src="/lilypad-client/lilypad-plea/app/main/images/logo.png" alt="Lilypad Logo"><span> Lilypad</span></div>
+        <div class="inner"><span>This Teacher's Students</span></div>
     </div>
     <!-- "Sidebar" showing a list of students -->
     <div id="sidebar" ng-if="!mainViewState.selectedChart" ng-controller="StudentSelectionCtrl" >
