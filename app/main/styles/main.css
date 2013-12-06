@@ -113,6 +113,37 @@ body {
 	color: white;
 }
 
+/***** Slideout Styles *****/
+
+#slideout {
+	position: fixed;
+	top: 100px;
+	right: 0;
+	width: 50px;
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+#slideout .celeration-form {
+	position: fixed;
+	top: 100px;
+	right: -400px;
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+#chart :target {
+	right: 400px;
+}
+
+#chart :target .celeration-form {
+	right: 0px;
+}
+
 /***** Celeration Chart Styles *****/
 
 #adjustments {
