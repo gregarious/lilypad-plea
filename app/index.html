@@ -2,16 +2,18 @@
 <html ng-app="plea">
 <head>
     <title>Lilypad - PLEA</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
     <!-- For that native webapp experience -->
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
 
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-
+<!--
     <link href="/lilypad-client/lilypad-plea/app/main/styles/reset.css" rel="stylesheet" type="text/css">
     <link href="/lilypad-client/lilypad-plea/app/main/styles/main.css" rel="stylesheet" type="text/css">
-
+-->
+	<link rel="stylesheet" href="/lilypad-client/lilypad-plea/app/styles.css" type="text/css">
     <!-- angular -->
     <script src="/lilypad-client/lilypad-plea/app/lib/angular-1.2.0-rc.2.js"></script>
 
@@ -27,13 +29,12 @@
 
 
     <!-- main module declaration -->
-    <script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>
+
+   <script src="/lilypad-client/lilypad-plea/app/main/module.js"></script>
 
     <!-- if developing with no back end, uncomment these two lines and comment out the one above -->
-    <!--
-    <script src="/lilypad-client/lilypad-plea/app/lib/angular-mocks.js"></script>
-    <script src="/lilypad-client/lilypad-plea/app/main/moduleNoBackend.js"></script>
-    -->
+    <!--<script src="/lilypad-client/lilypad-plea/app/lib/angular-mocks.js"></script>
+    <script src="/lilypad-client/lilypad-plea/app/main/moduleNoBackend.js"></script>-->
 
     <!-- student-related files -->
     <script src="/lilypad-client/lilypad-plea/app/students/models.js"></script>
@@ -57,16 +58,14 @@
 
 </head>
 <body ng-controller="MainCtrl">
-
     <div id="header">
-        <div class="inner"><img class="logo" src="/lilypad-client/lilypad-plea/app/main/images/logo.png" alt="Lilypad Logo"><span> Lilypad</span></div>
+        <div class="inner"><span>This Teacher's Students</span></div>
     </div>
     <!-- "Sidebar" showing a list of students -->
-    <div id="sidebar" ng-if="!mainViewState.selectedChart" ng-controller="StudentSelectionCtrl" >
-        <!--<h1>Students (Total: {{studentCount}})</h1>-->
+    <div id="sidebar" ng-if="!mainViewState.selectedChart" ng-controller="StudentSelectionCtrl" class="frame">
         <ul>
             <li ng-repeat="student in studentCollection.models">
-                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}">{{student.get('firstName')}} <span>{{student.get('lastName')}}</span></a>
+                <a href="" ng-click="selectStudent(student)" ng-class="{selected: student==mainViewState.selectedStudent}"><span class="studentFirstName">{{student.get('firstName')}}</span> {{student.get('lastName')}}</a>
             </li>
         </ul>
     </div>
@@ -77,7 +76,7 @@
         <div id="chartSelection"
              ng-if="mainViewState.selectedStudent && !mainViewState.selectedChart"
              ng-controller="ChartSelectionCtrl">
-            <h2>{{mainViewState.selectedStudent.get('firstName')}}'s Charts</h2>
+            <!--<h2>{{mainViewState.selectedStudent.get('firstName')}}'s--> <h2 class="charts">Charts</h2>
             <!-- Always list the scattplot, then cycle through other charts -->
             <ul>
                 <li><a href="" ng-click="selectScatterplot()">Behavior Scatterplot</a></li>
@@ -92,7 +91,7 @@
             ng-if="mainViewState.selectedChart"
             ng-controller="ChartCtrl">
             <div id="goBack" ng-click="goBack()">Back</div>
-            <h3>{{chart.getLabel()}}</h3>
+            <h2>{{chart.getLabel()}}</h2>
             <h4>Day Metrics</h4>
             <div id="draw" ng-show="dailyRecords.length">
             </div>
@@ -150,7 +149,7 @@
                 </div>
             </div>
 
-            <div id="modal">   
+            <div id="modal">
                 <div id="phaseline-form">
                     <div id="phaseline-header">
                         New Phaseline
