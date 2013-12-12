@@ -47,7 +47,7 @@ PhaseLine.prototype.drawFloor = function() {
 
 PhaseLine.prototype.drawType = function() {
 	var x = this.x;
-	var y = this.chart.chartHeight * .5;
+	var y = this.chart.chartHeight * .15;
 	var type = this.chart.paper.text(x, y, this.type);
 	type.transform('T -10 0 R -90');
 	return type;

@@ -20,7 +20,7 @@ body {
 
 #header {
 	height: 50px;
-	background: #4ABEA4;
+	background: #31353D;
 	width: 100%;
 	margin: auto;
 	padding-right: 30px;
@@ -74,7 +74,7 @@ body {
 
 #sidebar .selected {
 	color: white;
-	background-color: #4ABEA4;
+	background-color: #31353D;
 }
 
 /***** Main Panel Styles *****/
@@ -113,6 +113,113 @@ body {
 	color: white;
 }
 
+/***** Slideout Styles *****/
+
+#slideout {
+	position: fixed;
+	top: 80px;
+	right: 0;
+	width: 55px;
+	height: 55px;
+	background-color: #31353D;
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+#slideout .celeration-form {
+	position: fixed;
+	top: 80px;
+	right: -460px;
+	width: 460px;
+	height: 250px;
+	padding: 10px;
+	background-color: #f1f1f1;
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+#show-edit {
+	display: block;
+}
+
+#hide-edit {
+	display: none;
+}
+
+.edit-icon {
+	width: 35px;
+	height: auto;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+#chart :target {
+	right: 460px;
+}
+
+#chart :target #show-edit {
+	display: none;
+}
+
+#chart :target #hide-edit {
+	display: block;
+}
+
+#chart :target .celeration-form {
+	right: 0px;
+}
+
+.celeration-form a {
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 600;
+	width: 200px;
+	color: black;
+}
+
+#metric-form, #edit-phaseline-form {
+	display: none;
+}
+
+#metric-form label, #edit-phaseline-form label {
+	font-size: 14px;
+	display: inline-block;
+	width: 75px;
+}
+
+#metric-form input, #edit-phaseline-form input {
+	margin-top: 20px;
+	height: 30px;
+}
+
+#metric-form .smaller, #edit-phaseline-form .smaller {
+	width: 40px;
+}
+
+#edit-phaseline-form .larger {
+	width: 120px;
+}
+
+#metric-form input[type="submit"], #edit-phaseline-form input[type="submit"] {
+	clear: both;
+	display: block;
+	margin-top: 30px;
+	padding: 6px 13px;
+	background-color: #888;
+	border: 0;
+	font-size: 15px;
+	color: white;
+}
+
+.metrics-container {
+	display: inline-block;
+	vertical-align: top;
+	width: 200px;
+}
 /***** Celeration Chart Styles *****/
 
 #adjustments {
@@ -161,7 +268,6 @@ body {
 	text-align: center;
 }
 
-
 .adjuster .btn {
 	width: 40px;
 }
@@ -171,7 +277,7 @@ body {
 }
 
 #corrects-adjuster {
-	background-color: #4ABEA4;
+	background-color: #31353D;
 }
 
 #errors-adjuster {

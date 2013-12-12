@@ -89,12 +89,54 @@
             <h4>Day Metrics</h4>
             <div id="draw" ng-show="dailyRecords.length">
             </div>
-            <div id="adjustments">
+            <div id="slideout">
+                <a href="#slideout"><img id="show-edit" class="edit-icon" src="/lilypad-client/lilypad-plea/app/main/images/edit.png"></a>
+                <a href="#"><img id="hide-edit" class="edit-icon" src="/lilypad-client/lilypad-plea/app/main/images/edit.png"></a>
+                <div class="celeration-form">
+                    <a href="" ng-click="showMetricForm()">Record Metrics</a>
+                    <a href="" ng-click="showPhaselineForm()">Record Phaseline</a>
+                    <div id="metric-form">
+                        <form ng-submit="saveMetrics()">
+                            <label for="currentDate">Date: </label>
+                            <input type="date" id="currentDate"><br>
+                            <div class="metrics-container">
+                                <label for="corrects">Corrects: </label>
+                                <input type="text" ng-model="corrects" class="smaller"><br>
+                                <label for="errors">Errors: </label>
+                                <input type="text" ng-model="errors" class="smaller"><br>
+                            </div>
+                            <div class="metrics-container">
+                                <label for="floor">Floor: </label>
+                                <input type="text" ng-model="floor" class="smaller"><br>
+                                <label for="trials">Trials: </label>
+                                <input type="text" ng-model="trials" class="smaller">
+                            </div>
+                            <input type="submit" value="SAVE">
+                        </form>
+                    </div>
+                    <div id="edit-phaseline-form">
+                        <form ng-submit="savePhaseline()">
+                            <label for="currentPhaselineDate">Date: </label>
+                            <input type="date" id="currentPhaselineDate"><br>
+                            <div class="metrics-container">
+                                <label for="phaseline-floor">Floor: </label>
+                                <input type="text" ng-model="phaselineFloor" class="smaller"><br>
+                                <label for="phaseline-type">Type: </label>
+                                <input type="text" ng-model="phaselineType" class="smaller"><br>
+                            </div>
+                            <div class="metrics-container">
+                                <label for="notes">Notes: </label>
+                                <input type="text" ng-model="phaselineNotes" class="larger"><br>
+                            </div>
+                            <input type="submit" value="SAVE">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--<div id="adjustments">
                 <div class="adjustment-section">
                     <h3>{{mainViewState.selectedStudent.get('firstName')}} {{mainViewState.selectedStudent.get('lastName')}}</h3>
                 </div>
-                <!--<div class="seesay">see/say</div>
-                <div class="colors">colors</div>-->
                 <div class="adjustment-section" id="floor-section">
                     <h2>Floor</h2>
                     <div id="floor-adjuster" class="adjuster">
@@ -162,7 +204,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
            <!-- <div class="modal hide fade" id="addPhaseline" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

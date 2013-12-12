@@ -6,16 +6,26 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
     /**
      * $scope initialization
      */
-
     document.body.onselectstart = function() { return false; }
     $scope.chart = mainViewState.selectedChart;
     // upon fetching data, this array will be filled with bare Javascript
     // objects of the form: {date: '2013-09-03', floor: 40, correct: 40, etc.}
     $scope.dailyRecords = [];
+    $scope.phaseLineCollection = $scope.chart.getPhaseLines();
 
     $scope.goBack = function() {
     	mainViewState.selectedChart = null;
     	$scope.chart = null;
+    }
+
+    $scope.showMetricForm = function() {
+    	document.getElementById("edit-phaseline-form").style.display = "none";
+    	document.getElementById("metric-form").style.display = "block";
+    }
+
+    $scope.showPhaselineForm = function() {
+    	document.getElementById("metric-form").style.display = "none";
+    	document.getElementById("edit-phaseline-form").style.display = "block";
     }
 
     // Fetch the Collection of DayMetric objects and group values for the same
@@ -28,13 +38,37 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 			var pkg = packageMetricValues(dayMetricCollection.where({'date': date}));
 			$scope.dailyRecords.push(pkg);
 		});
+		_help = $scope.dailyRecords;
 
 		_chart = new Chart();
     });
 
+    $scope.saveMetrics = function() {
+    	$scope.dailyRecords.push({
+    		corrects: $scope.corrects,
+    		errors: $scope.errors,
+    		floor: $scope.floor,
+    		trials: $scope.trials
+    	});
+    	_chart.drawHistoricalData($scope.dailyRecords);
+    	window.location.href = '#';
+    }
+
+    $scope.savePhaseline = function() {
+    	$scope.phaseLineCollection.push({
+    		floor: $scope.phaselineFloor,
+    		type: $scope.phaselineType,
+    		notes: $scope.phaselineNotes
+    	});
+    	//change activeDay based on calendar input
+    	new PhaseLine(_chart, _chart.activeDay, $scope.phaselineType, $scope.phaselineNotes, $scope.phaselineFloor);
+    	window.location.href = '#';
+    }
+
     // No need to do any extra processing to the phase lines, just expose
     // the bare collection.
-    $scope.phaseLineCollection = $scope.chart.getPhaseLines();
+
+
 
 
     /**
@@ -91,9 +125,9 @@ angular.module('plea').controller('ChartCtrl', function($scope, mainViewState, _
 		this.drawXAxis();
 		this.drawYAxis();
 		this.drawHistoricalData($scope.dailyRecords);
-		this.createChartTouchEvents();
+		/*this.createChartTouchEvents();
 		this.createPhaselineTouchEvents();
-		this.createAdjustmentsTouchEvents();
+		this.createAdjustmentsTouchEvents();*/
 	}
 
 	Chart.prototype.setDimensions = function() {
